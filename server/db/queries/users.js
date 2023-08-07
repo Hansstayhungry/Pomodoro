@@ -14,4 +14,10 @@ const getUserById = id => {
 	})
 }
 
-module.exports = {getAllUsers, getUserById}
+const getUserByEmail = email => {
+	return db.query("SELECT * FROM users; WHERE email = $1", [email]).then(data => {
+		return data.rows;
+	})
+}
+
+module.exports = {getAllUsers, getUserById, getUserByEmail}

@@ -1,8 +1,15 @@
 -- seeds/01_users.sql
 -- users seeds
-INSERT INTO users (id, email, password) VALUES (1, 'rick.sandchez@gmail.com', 'picklerick');
-INSERT INTO users (id, email, password) VALUES (2, 'lisa.simpson@gmail.com', 'ehhhhh');
-INSERT INTO users (id, email, password) VALUES (3, 'link@yahoo.com', 'hyrule');
-INSERT INTO users (id, email, password) VALUES (4, 'simon_bel123@mail.ca', 'dracula');
-INSERT INTO users (id, email, password) VALUES (5, 'all_might@academia.jp', 'plusUltra');
-INSERT INTO users (id, email, password) VALUES (6, 'mario@mushroomkindom.jp', 'plumber79');
+INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES 
+  ('Alice', 'Smith', 'alicesmith123@gmail.com', 'alice123!', now(), now()), 
+  ('Bob', 'Jones', 'bobjones@gmail.com', 'bobj456@', now(), now()), 
+  ('Charlie', 'Brown', 'charliebrown@gmail.com', 'charlie789#', now(), now()), 
+  ('David', 'Lee', 'davidlee@gmail.com', 'david101$', now(), now()), 
+  ('Emma', 'Watson', 'emma.watson@gmail.com', 'emmaw202%', now(), now()), 
+  ('Frank', 'Miller', 'frankmiller@gmail.com', 'frank303^', now(), now()), 
+  ('Grace', 'Kim', 'gracekim@gmail.com', 'grace404&', now(), now()), 
+  ('Harry', 'Potter', 'harrypotter@gmail.com', 'harry505*', now(), now()), 
+  ('Iris', 'Wang', 'iriswang@gmail.com', 'iris606+', now(), now()), 
+  ('Jack', 'Chen', 'jackchen@gmail.com', 'jack707=', now(), now()), 
+  ('Kate', 'Wilson', 'katewilson@gmail.com', 'kate808?', now(), now()), 
+  ('Leo', 'Garcia', 'leo.garcia@gmail.com', 'leog909~', now(), now());
