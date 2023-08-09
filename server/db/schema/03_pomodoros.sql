@@ -1,4 +1,4 @@
--- schema/01_create_users.sql
+-- schema/03_pomodoros.sql
 DROP TABLE IF EXISTS pomodoros CASCADE;
 -- CREATE POMODOROS
 CREATE TABLE pomodoros ( 
@@ -7,5 +7,5 @@ CREATE TABLE pomodoros (
   end_time TIMESTAMP WITH TIME ZONE NOT NULL, 
   duration INTERVAL NOT NULL, 
   task_id INTEGER NOT NULL REFERENCES tasks (id) ON DELETE CASCADE, 
-  user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE 
+  user_id INTEGER REFERENCES users (id) ON DELETE CASCADE 
 );

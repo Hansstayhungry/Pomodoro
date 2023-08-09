@@ -1,4 +1,4 @@
--- schema/01_create_users.sql
+-- schema/01_users.sql
 DROP TABLE IF EXISTS users CASCADE;
 -- CREATE USERS
 CREATE TABLE users (
