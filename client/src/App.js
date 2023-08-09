@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Header player= {<Player audioUrl = {audioUrl}/> } handleAmbientToggle={handleAmbientToggle}
+      <Header audioUrl = {audioUrl} handleAmbientToggle={handleAmbientToggle}
       />
 
       <Timer
