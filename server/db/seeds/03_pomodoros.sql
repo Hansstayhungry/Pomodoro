@@ -1,13 +1,8 @@
-INSERT INTO pomodoros (start_time, end_time, duration, task_id, user_id) VALUES 
- (now() - interval '1 hour' , now() - interval '35 minutes' , age(now() - interval '35 minutes' , now() - interval '1 hour') , 1 , 1) , 
- (now() - interval '2 hours' , now() - interval '1:35:00' , age(now() - interval '1:35:00' , now() - interval '2 hours') , 2 , 2), 
- (now() - interval '3 hours' , now() - interval '2:35:00' , age(now() - interval '2:35:00' , now() - interval '3 hours') , 3 , 3),
- (now() - interval '1 hour' , now() - interval '35 minutes' , age(now() - interval '35 minutes' , now() - interval '1 hour') , 4 , 4) , 
- (now() - interval '2 hours' , now() - interval '1:35:00' , age(now() - interval '1:35:00' , now() - interval '2 hours') , 5 , 5), 
- (now() - interval '3 hours' , now() - interval '2:35:00' , age(now() - interval '2:35:00' , now() - interval '3 hours') , 6 , 6),
- (now() - interval '1 hour' , now() - interval '35 minutes' , age(now() - interval '35 minutes' , now() - interval '1 hour') , 7 , 7) , 
- (now() - interval '2 hours' , now() - interval '1:35:00' , age(now() - interval '1:35:00' , now() - interval '2 hours') , 8 , 8), 
- (now() - interval '3 hours' , now() - interval '2:35:00' , age(now() - interval '2:35:00' , now() - interval '3 hours') , 9 , 9),
- (now() - interval '1 hour' , now() - interval '35 minutes' , age(now() - interval '35 minutes' , now() - interval '1 hour') , 10 , 10) ,
- (now() - interval '3 hours' , now() - interval '2:35:00' , age(now() - interval '2:35:00' , now() - interval '3 hours') , 11 , 11),
- (now() - interval '1 hour' , now() - interval '35 minutes' , age(now() - interval '35 minutes' , now() - interval '1 hour') , 12 , 12);
+INSERT INTO pomodoros (focus_time, break_time, repeat, start_time, estimated_end_time, end_time, task_id, user_id) VALUES 
+  ('25 minutes', '5 minutes', 4, '2023-08-09 10:30:00-06', '2023-08-09 12:30:00-06', '2023-08-09 12:05:00-06', 1, 1), 
+  ('30 minutes', '10 minutes', 3, '2023-08-09 13:00:00-06', '2023-08-09 15:00:00-06', '2023-08-09 14:55:00-06', 2, 1), 
+  ('20 minutes', '5 minutes', 5, '2023-08-09 15:30:00-06', '2023-08-09 17:35:00-06', NULL, 3, 1), 
+  ('25 minutes', '5 minutes', 4, '2023-08-09 10:45:00-06', '2023-08-09 12:45:00-06', NULL, 4, 2), 
+  ('30 minutes', '10 minutes', 3, '2023-08-09 13:15:00-06', '2023-08-09 15:15:00-06', NULL, 5, 2), 
+  ('20 minutes', '5 minutes', 5, '2023-08-09 15:45:00-06', '2023-08-09 17:50:00-06', NULL, 6, 2), 
+  ('25 minutes', '5 minutes', 4, '2023-08-09 11:00:00-06', '2023-08-09 13:00:00-06', NULL, 7, 3);
