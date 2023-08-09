@@ -10,29 +10,25 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import '../styles/Header.scss';
 
 const Header = (props) => {
+  const { handleAmbientToggle } = props;
+
   const [value, setValue] = React.useState(30);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
+    <div>
     <section>
-      <div>
-        <PlayArrowIcon />
-        <Box sx={{ width: 200 }}>
-          <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-            <VolumeDown />
-            <Slider aria-label="Volume" value={value} onChange={handleChange} />
-            <VolumeUp />
-          </Stack>
-        </Box>        
-      </div>
+      {props.player}
       <h1>Doro - Your Personal Productivity Booster</h1>
       <div className="auth-links">
           <a href="/login">Login</a>
           <a href="/signup">Sign Up</a>
         </div>
     </section>
+    <div onClick={(handleAmbientToggle)}> Ambient Sound</div>
+    </div>
   )
 }
 

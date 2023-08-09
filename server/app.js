@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
+const audioRouter = require('./routes/audio');
 const usersRouter = require('./routes/users');
 const tasksRouter = require('./routes/tasks');
 const pomodorosRouter = require('./routes/pomodoros');
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/audio', audioRouter);
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
 app.use('/pomodoros', pomodorosRouter);
