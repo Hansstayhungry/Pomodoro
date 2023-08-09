@@ -1,4 +1,4 @@
--- schema/01_create_users.sql
+-- schema/02_tasks.sql
 DROP TABLE IF EXISTS tasks CASCADE;
 -- CREATE TASKS
 CREATE TABLE tasks ( 
@@ -6,5 +6,5 @@ CREATE TABLE tasks (
   title VARCHAR(255) NOT NULL, 
   description TEXT, 
   status VARCHAR(255) NOT NULL CHECK (status IN ('pending', 'in progress', 'completed', 'canceled')), 
-  user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE 
+  user_id INTEGER REFERENCES users (id) ON DELETE CASCADE 
 );
