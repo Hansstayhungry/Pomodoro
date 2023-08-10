@@ -20,4 +20,22 @@ const getUserByEmail = email => {
 	})
 }
 
-module.exports = {getAllUsers, getUserById, getUserByEmail}
+const addUser = (first_name, last_name, email, password, created_at, updated_at) => {
+	return db.query("INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [first_name, last_name, email, password, created_at, updated_at]).then(data => {
+		return data.rows;
+	})
+}
+
+const editUser = (id, first_name, last_name, email, password, updated_at) => {
+	return db.query("UPDATE users SET first_name = $1, last_name = $2, email = $3, password = $4, updated_at = $5 WHERE id = $6 RETURNING *", [first_name, last_name, email, password,  updated_at, id]).then(data => {
+		return data.rows;
+	})
+}
+
+const deleteUser = id => {
+	return db.query("DELETE FROM users WHERE id = $1 RETURNING *", [id]).then(data => {
+		return data.rows;
+	})
+}
+
+module.exports = {getAllUsers, getUserById, getUserByEmail, addUser, editUser, deleteUser}
