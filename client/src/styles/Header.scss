@@ -1,51 +1,48 @@
-// // Reset some default styles
-// body, h1, h2, h3, h4, h5, h6, p, ul, li {
-//   margin: 0;
-//   padding: 0;
-// }
 
-// // Basic styles for the section element
-// section {
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: center;
-//   background-color: #f0f0f0;
-//   padding: 20px;
 
-//   // Styles for the div inside the section
-//   > div {
-//     display: flex;
-//     flex-direction: row;
-//     align-items: center;
-//   }
+.header {
+  // Your header styling here
 
-//   // Styles for the h1 element
-//   h1 {
-//     font-size: 30px;
-//     margin: 20px 30px;
-//   }
+  section {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-around;
 
-//   // Styles for the auth-links div
-//   .auth-links {
-//     display: flex;
-//     justify-content: center;
-//     flex-direction: row;
+    .auth-links {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Add some spacing between the links */
 
-//     // Styles for the links inside auth-links (adjust colors and styles as needed)
-//     a {
-//       display: inline-block;
-//       margin: 5px;
-//       padding: 10px 20px;
-//       text-decoration: none;
-//       color: #fff;
-//       background-color: blue;
-//       border-radius: 4px;
+      a {
+        text-decoration: none;
+        color: #007bff;
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        border-radius: 4px;
 
-//       // Hover effect for the links
-//       &:hover {
-//         background-color: #303f9f;
-//       }
-//     }
-//   }
-// }
+        &:hover {
+          background-color: #007bff;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .nav-bar-item {
+      margin: 0 10px;
+      cursor: pointer;
+
+      // Additional styling for the nav-bar items
+    }
+  }
+}
+
