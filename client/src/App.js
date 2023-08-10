@@ -1,15 +1,14 @@
-// import './App.scss';
+import './App.scss';
 
 import { useState, useEffect } from 'react';
 
 import Timer from './routes/Timer';
 import Todo from './routes/Todo';
 import Header from './components/Header';
-import Player from './components/Player';
 import Ambient from './components/Ambient';
 
-import 'react-h5-audio-player/lib/styles.css';
-
+import { Typography, AppBar, Card, CardActions, CardContent, 
+  CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
 
 function App() {
 
@@ -18,6 +17,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [audio, setAudio] = useState([]);
   const [showAmbient, setShowAmbient] = useState(false);
+  const [showHome, setShowHome] = useState(true);
   const [audioUrl, setAudioUrl] = useState([]);
 
   const handleAudioClick = (link) => {
@@ -25,7 +25,13 @@ function App() {
   }
 
   const handleAmbientToggle = () => {
-    setShowAmbient(!showAmbient);
+    setShowHome(false);
+    setShowAmbient(true);
+  }
+
+  const handleHomeToggle = () => {
+    setShowAmbient(false);
+    setShowHome(true);
   }
 
   
@@ -41,17 +47,17 @@ function App() {
 
   return (
     <div className='App'>
-      <Header player= {<Player audioUrl = {audioUrl}/> } handleAmbientToggle={handleAmbientToggle}
-      />
 
-      <Timer
-      />
+      <Header audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle} />
+      {showHome && (
+        <>
+          <Timer />
+          <Todo todos={todos} />
+        </>
+      )}
 
       {showAmbient && <Ambient audio = {audio} handleAudioClick ={handleAudioClick}
       />}
-
-      <Todo todos={todos}
-      />
     </div>
 
   );

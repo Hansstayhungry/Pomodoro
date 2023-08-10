@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+import { Button, TextField, Typography } from "@mui/material"
+import "../styles/Timer.scss"
+
 const Timer = () => {
   const [workTime, setWorkTime] = useState(45 * 60); // Default to 45 mins
   const [breakTime, setBreakTime] = useState(5 * 60); // Default to 15 mins
@@ -73,13 +76,13 @@ const Timer = () => {
 
   return (
     <div className="timer">
-      <h2>{isBreakTime ? "Break Time" : "Work Time"}</h2>
-      <span>
+      <Typography variant='h5' >{isBreakTime ? "Break Time" : "Work Time"}</Typography>
+      <Typography variant='h2'>
         {minutes}:{seconds}
-      </span>
+      </Typography>
       <div className="buttons">
-        <button onClick={handleToggle}>{isActive ? "Pause" : "Start"}</button>
-        <button onClick={handleEnd}>End</button>
+        <Button onClick={handleToggle}>{isActive ? "Pause" : "Start"}</Button>
+        <Button onClick={handleEnd}>End</Button>
       </div>
       <div className="settings">
         <label>
