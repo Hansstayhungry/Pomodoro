@@ -7,8 +7,6 @@ import Todo from './routes/Todo';
 import Header from './components/Header';
 import Ambient from './components/Ambient';
 
-import 'react-h5-audio-player/lib/styles.css';
-
 import { Typography, AppBar, Card, CardActions, CardContent, 
   CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
 
