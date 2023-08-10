@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Grid, ThemeProvider, createTheme } from '@mui/material';
 import Player from './Player';
 
-// import '../styles/Header.scss';
+import '../styles/Header.scss';
 
 const Header = (props) => {
   const { handleAmbientToggle, handleHomeToggle, audioUrl } = props;
@@ -20,41 +20,31 @@ const Header = (props) => {
   
 
   return (
-    <ThemeProvider theme= {customTheme}>
-      <AppBar position="static">
+    <ThemeProvider theme={customTheme}>
+      <AppBar position="static" className="header-container">
         <Toolbar>
-          <Grid container alignItems="center">
-            <Grid item xs={2}> {/* Adjust the value of xs to control the width */}
-              <Player audioUrl={audioUrl} color="inherit"/>
+          <Grid container alignItems="center" className="gridbar">
+            <Grid item xs={1.5}>
+              <Player audioUrl={audioUrl} color="inherit" />
             </Grid>
-              <Typography variant="h3" component="div" sx={{ flexGrow: 1, paddingLeft: 12}}>
-                Doro - Your Personal Productivity Booster
-              </Typography>
-              <div className="auth-links">
-                <Button color="inherit" href=""
-                 sx={{ backgroundColor: customTheme.palette.secondary.main }}>
-                  Login
-                </Button>
-                <Button color="inherit" href=""
-                 sx={{ backgroundColor: customTheme.palette.secondary.main }}>
-                  Sign Up
-                </Button>
-              </div>
+            <Typography variant="h3" className='logo'>
+              Doro - Your Personal Productivity Booster
+            </Typography>
+            <div className="auth-links">
+              <Button color="inherit" href="" className="auth-button">
+                Login
+              </Button>
+              <Button color="inherit" href="" className="auth-button">
+                Sign Up
+              </Button>
+            </div>
           </Grid>
         </Toolbar>
-        <div className="nav-bar" style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            className="nav-bar-item"
-            color="inherit"
-            onClick={handleHomeToggle}
-          >
+        <div className="nav-bar">
+          <Button className="nav-bar-item" color="inherit" onClick={handleHomeToggle}>
             Home
           </Button>
-          <Button
-            className="nav-bar-item"
-            color="inherit"
-            onClick={handleAmbientToggle}
-          >
+          <Button className="nav-bar-item" color="inherit" onClick={handleAmbientToggle}>
             Ambient Sound
           </Button>
         </div>

@@ -1,5 +1,4 @@
-@import 'react-h5-audio-player/src/styles.scss';
-
-$rhap_theme-color: #f2933f;          // Change button and indicator color
-$rhap_background-color: #f2933f;    // Change player background color
-$rhap_bar-color: #f2ce3f;            // Change volume and progress bar color
+.rhap_container {
+  background-color: #f2933f;
+  box-shadow: none;
+}

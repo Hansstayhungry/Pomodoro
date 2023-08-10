@@ -1,9 +1,10 @@
 import React from "react";
 
-import AudioPlayer from 'react-h5-audio-player';
+import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
 
-
+import 'react-h5-audio-player/lib/styles.css';
 import '../styles/custom-audio-player.scss';
+
 // import 'react-h5-audio-player/lib/styles.less' Use LESS
 // import 'react-h5-audio-player/src/styles.scss' Use SASS
 
@@ -19,6 +20,8 @@ const Player = (props) => {
         // other props here
         loop = {true}
         showJumpControls = {false}
+        customProgressBarSection={[]}
+        customAdditionalControls={[]}
       />         
     </div>
  
