@@ -3,7 +3,7 @@ import './App.scss';
 import { useState, useEffect } from 'react';
 
 import Timer from './routes/Timer';
-import Todo from './routes/Todo';
+import TodoList from './routes/TodoList';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Ambient from './components/Ambient';
@@ -14,6 +14,7 @@ import { Typography, AppBar, Card, CardActions, CardContent,
 function App() {
 
   const GET_AUDIO = '/audio/api/'
+  const GET_TASKS = '/tasks'
 
   const [todos, setTodos] = useState([]);
   const [audio, setAudio] = useState([]);
@@ -45,6 +46,16 @@ function App() {
     }
     fetchAudioData();
   }, [todos])
+  useEffect(() => {
+    async function fetchTasksData () {
+      const tasksResponse = await fetch(GET_TASKS);
+      let tasksData = await tasksResponse.json();
+      tasksData = tasksData['tasks'];
+      console.log(tasksData)
+      setTodos(tasksData);
+    }
+    fetchTasksData();
+  }, [])
 
   return (
     <div className='App'>
@@ -53,7 +64,7 @@ function App() {
       {showHome && (
         <>
           <Timer />
-          <Todo todos={todos} />
+          <TodoList todos={todos} />
         </>
       )}
 

@@ -3,13 +3,25 @@
 const db = require('../../configs/db.config');
 
 const getAllPomodoros = () => {
-	return db.query("SELECT * FROM pomodoros;").then(data => {
+	return db.query("SELECT * FROM pomodoros ORDER BY id;").then(data => {
 		return data.rows;
 	})
 }
 
 const getPomodoroById = id => {
-	return db.query("SELECT * FROM pomodoros; WHERE id = $1", [id]).then(data => {
+	return db.query("SELECT * FROM pomodoros WHERE id = $1 ORDER BY id;", [id]).then(data => {
+		return data.rows;
+	})
+}
+
+const getPomodoroByUserId = user_id => {
+	return db.query("SELECT * FROM pomodoros WHERE user_id = $1 ORDER BY id;", [user_id]).then(data => {
+		return data.rows;
+	})
+}
+
+const getPomodoroByTaskId = task_id => {
+	return db.query("SELECT * FROM pomodoros WHERE task_id = $1 ORDER BY id;", [task_id]).then(data => {
 		return data.rows;
 	})
 }
@@ -32,4 +44,4 @@ const deletePomodoro = id => {
 	})
 }
 
-module.exports = {getAllPomodoros, getPomodoroById, addPomodoro, editPomodoro, deletePomodoro}
+module.exports = {getAllPomodoros, getPomodoroById, getPomodoroByUserId, getPomodoroByTaskId, addPomodoro, editPomodoro, deletePomodoro}

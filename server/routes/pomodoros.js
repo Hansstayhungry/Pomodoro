@@ -10,13 +10,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  pomodoros.addPomodoro(req.params.focus_time, req.params.break_time, req.params.repeat, req.params.start_time, req.params.estimated_end_time, req.params.end_time, req.params.task_id, req.params.user_id).then(data => {
+  pomodoros.addPomodoro(req.body.focus_time, req.body.break_time, req.body.repeat, req.body.start_time, req.body.estimated_end_time, req.body.end_time, req.body.task_id, req.body.user_id).then(data => {
     console.log(data);
     res.json({pomodoros: data});
   })
 });
 router.post('/:id/edit', (req, res) => {
-  pomodoros.editPomodoro(req.params.id, req.params.focus_time, req.params.break_time, req.params.repeat, req.params.start_time, req.params.estimated_end_time, req.params.end_time).then(data => {
+  pomodoros.editPomodoro(req.params.id, req.body.focus_time, req.body.break_time, req.body.repeat, req.body.start_time, req.body.estimated_end_time, req.body.end_time).then(data => {
     console.log(data);
     res.json({pomodoros: data});
   })

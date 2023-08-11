@@ -3,7 +3,7 @@
 const db = require('../../configs/db.config');
 
 const getAllUsers = () => {
-	return db.query("SELECT * FROM users;").then(data => {
+	return db.query("SELECT * FROM users ORDER BY id;").then(data => {
 		return data.rows;
 	})
 }
