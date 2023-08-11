@@ -3,13 +3,19 @@
 const db = require('../../configs/db.config');
 
 const getAllTasks = () => {
-	return db.query("SELECT * FROM tasks;").then(data => {
+	return db.query("SELECT * FROM tasks ORDER BY id;").then(data => {
 		return data.rows;
 	})
 }
 
 const getTaskById = id => {
 	return db.query("SELECT * FROM tasks; WHERE id = $1", [id]).then(data => {
+		return data.rows;
+	})
+}
+
+const getTaskByUserId = user_id => {
+	return db.query("SELECT * FROM tasks WHERE user_id = $1 ORDER BY id;", [user_id]).then(data => {
 		return data.rows;
 	})
 }
@@ -31,4 +37,4 @@ const deleteTask = id => {
 		return data.rows;
 	})
 }
-module.exports = {getAllTasks, getTaskById, addTask, editTask, deleteTask}
+module.exports = {getAllTasks, getTaskById, getTaskByUserId, addTask, editTask, deleteTask}

@@ -3,13 +3,19 @@
 const db = require('../../configs/db.config');
 
 const getAllInterruptions = () => {
-	return db.query("SELECT * FROM interruptions;").then(data => {
+	return db.query("SELECT * FROM interruptions ORDER BY id;").then(data => {
 		return data.rows;
 	})
 }
 
 const getInterruptionById = id => {
 	return db.query("SELECT * FROM interruptions; WHERE id = $1", [id]).then(data => {
+		return data.rows;
+	})
+}
+
+const getInterruptionByPomodoroId = pomodoros_id => {
+	return db.query("SELECT * FROM interruptions WHERE pomodoros_id = $1 ORDER BY id;", [pomodoros_id]).then(data => {
 		return data.rows;
 	})
 }
@@ -32,4 +38,4 @@ const deleteInterruption = id => {
 	})
 }
 
-module.exports = {getAllInterruptions, getInterruptionById,addInterruption, editInterruption, deleteInterruption}
+module.exports = {getAllInterruptions, getInterruptionById, getInterruptionByPomodoroId, addInterruption, editInterruption, deleteInterruption}
