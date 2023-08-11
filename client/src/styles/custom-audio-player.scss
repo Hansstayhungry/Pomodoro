@@ -2,3 +2,17 @@
   background-color: #f2933f;
   box-shadow: none;
 }
+
+.rhap_controls-section {
+  width: 68%;
+}
+
+.rhap_volume-container {
+  flex: 2;
+}
+
+.player {
+  display:flex;
+  width: 100%;
+  align-items: center;
+}
