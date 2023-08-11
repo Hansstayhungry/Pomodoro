@@ -6,7 +6,7 @@ import logo from '../logo.png';
 import '../styles/Header.scss';
 
 const Header = (props) => {
-  const { handleAmbientToggle, handleHomeToggle, audioUrl, handleSignIn } = props;
+  const { handleAmbientToggle, handleHomeToggle, audioUrl, handleSignIn, handleSignUp } = props;
 
   const customTheme = createTheme({
     palette: {
@@ -33,7 +33,7 @@ const Header = (props) => {
               <Button onClick={handleSignIn} color="inherit" href="" className="auth-button">
                 Login
               </Button>
-              <Button color="inherit" href="" className="auth-button">
+              <Button onClick={handleSignUp} color="inherit" href="" className="auth-button">
                 Sign Up
               </Button>
             </div>

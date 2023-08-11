@@ -12,6 +12,7 @@ import Login from './components/Login';
 // import { Typography, AppBar, Card, CardActions, CardContent, 
 //   CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
 import Dashboard from './components/Dashboard';
+import SignUp from './components/Signup';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
   const [showHome, setShowHome] = useState(true);
   const [audioUrl, setAudioUrl] = useState([]);
   const [showLogin, setShowLogin] = useState(false)
+  const [showSignup, setShowSignUp] = useState(false)
 
   const handleAudioClick = (link) => {
     setAudioUrl(link)
@@ -33,18 +35,28 @@ function App() {
     setShowHome(false);
     setShowAmbient(true);
     setShowLogin(false)
+    setShowSignUp(false)
   }
 
   const handleHomeToggle = () => {
     setShowAmbient(false);
     setShowHome(true);
     setShowLogin(false)
+    setShowSignUp(false)
   }
 
   const handleSignIn = () => {
     setShowLogin(true);
     setShowAmbient(false);
     setShowHome(false);
+    setShowSignUp(false)
+  }
+
+  const handleSignUp = () => {
+    setShowSignUp(true)
+    setShowHome(false);
+    setShowAmbient(false);
+    setShowLogin(false)
   }
 
   
@@ -72,7 +84,7 @@ function App() {
     <div className='App'>
 
       <Header audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
-      handleSignIn={handleSignIn} />
+      handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
       {showHome && (
         <>
           <Timer />
@@ -83,8 +95,8 @@ function App() {
       {showAmbient && <Ambient audio = {audio} handleAudioClick ={handleAudioClick}
       />}
 
-      {showLogin &&  <Login open={showLogin} onClose={handleSignIn} />}
-
+      {showLogin &&  <Login open={showLogin} handleSignIn={handleSignIn} handleSignUp ={handleSignUp} />}
+      {showSignup &&  <SignUp open={showSignup} handleSignUp ={handleSignUp} handleSignIn={handleSignIn} />}
 
       <Dashboard />
       <Footer />
