@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Grid, ThemeProvider, createTheme } from '@mui/material';
 import Player from './Player';
 
+import logo from '../logo.png';
 import '../styles/Header.scss';
 
 const Header = (props) => {
@@ -24,9 +25,7 @@ const Header = (props) => {
       <AppBar position="static" className="header-container">
         <Toolbar>
           <Grid container alignItems="center" className="gridbar">
-            <Grid item xs={1.5}>
-              <Player audioUrl={audioUrl} color="inherit" />
-            </Grid>
+            <img src={logo} />
             <Typography variant="h3" className='logo'>
               Doro - Your Personal Productivity Booster
             </Typography>
@@ -40,6 +39,9 @@ const Header = (props) => {
             </div>
           </Grid>
         </Toolbar>
+        <div className="player-container">
+            <Player audioUrl={audioUrl}/>        
+        </div>
         <div className="nav-bar">
           <Button className="nav-bar-item" color="inherit" onClick={handleHomeToggle}>
             Home

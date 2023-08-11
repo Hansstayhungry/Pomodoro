@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Timer from './routes/Timer';
 import Todo from './routes/Todo';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Ambient from './components/Ambient';
 
 import { Typography, AppBar, Card, CardActions, CardContent, 
@@ -58,8 +59,10 @@ function App() {
 
       {showAmbient && <Ambient audio = {audio} handleAudioClick ={handleAudioClick}
       />}
-    </div>
 
+      <Footer />
+
+    </div>
   );
 }
 
