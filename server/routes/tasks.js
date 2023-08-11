@@ -15,6 +15,14 @@ router.post('/', (req, res) => {
     res.json({tasks: data});
   })
 });
+
+router.get('/:id/pomodoros', (req, res) => {
+  tasks.getAllPomodoros(req.params.id).then(data => {
+    console.log(data);
+    res.json({pomodoros: data});
+  })
+});
+
 router.post('/:id/edit', (req, res) => {
   tasks.editTask(req.params.id, req.body.title, req.body.description, req.body.status).then(data => {
     console.log(data);
