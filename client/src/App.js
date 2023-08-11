@@ -7,9 +7,12 @@ import TodoList from './routes/TodoList';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Ambient from './components/Ambient';
+import Login from './components/Login';
 
-import { Typography, AppBar, Card, CardActions, CardContent, 
-  CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
+// import { Typography, AppBar, Card, CardActions, CardContent, 
+//   CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
+import Dashboard from './components/Dashboard';
+import SignUp from './components/Signup';
 
 function App() {
 
@@ -21,6 +24,8 @@ function App() {
   const [showAmbient, setShowAmbient] = useState(false);
   const [showHome, setShowHome] = useState(true);
   const [audioUrl, setAudioUrl] = useState([]);
+  const [showLogin, setShowLogin] = useState(false)
+  const [showSignup, setShowSignUp] = useState(false)
 
   const handleAudioClick = (link) => {
     setAudioUrl(link)
@@ -29,11 +34,29 @@ function App() {
   const handleAmbientToggle = () => {
     setShowHome(false);
     setShowAmbient(true);
+    setShowLogin(false)
+    setShowSignUp(false)
   }
 
   const handleHomeToggle = () => {
     setShowAmbient(false);
     setShowHome(true);
+    setShowLogin(false)
+    setShowSignUp(false)
+  }
+
+  const handleSignIn = () => {
+    setShowLogin(true);
+    setShowAmbient(false);
+    setShowHome(false);
+    setShowSignUp(false)
+  }
+
+  const handleSignUp = () => {
+    setShowSignUp(true)
+    setShowHome(false);
+    setShowAmbient(false);
+    setShowLogin(false)
   }
   
   useEffect(() => {
@@ -57,7 +80,8 @@ function App() {
   return (
     <div className='App'>
 
-      <Header audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle} />
+      <Header audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
+      handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
       {showHome && (
         <>
           <Timer />
@@ -68,7 +92,13 @@ function App() {
       {showAmbient && <Ambient audio = {audio} handleAudioClick ={handleAudioClick}
       />}
 
+      {showLogin &&  <Login open={showLogin} handleSignIn={handleSignIn} handleSignUp ={handleSignUp} />}
+      {showSignup &&  <SignUp open={showSignup} handleSignUp ={handleSignUp} handleSignIn={handleSignIn} />}
+
+      <Dashboard />
       <Footer />
+      
+
 
     </div>
   );
