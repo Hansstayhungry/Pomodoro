@@ -35,7 +35,6 @@ function App() {
     setShowAmbient(false);
     setShowHome(true);
   }
-
   
   useEffect(() => {
     async function fetchAudioData () {
@@ -44,9 +43,6 @@ function App() {
       console.log(audioData)
       setAudio(audioData);
     }
-    fetchAudioData();
-  }, [todos])
-  useEffect(() => {
     async function fetchTasksData () {
       const tasksResponse = await fetch(GET_TASKS);
       let tasksData = await tasksResponse.json();
@@ -54,6 +50,7 @@ function App() {
       console.log(tasksData)
       setTodos(tasksData);
     }
+    fetchAudioData();
     fetchTasksData();
   }, [])
 
@@ -64,7 +61,7 @@ function App() {
       {showHome && (
         <>
           <Timer />
-          <TodoList todos={todos} />
+          <TodoList todos={todos} setTodos={setTodos} />
         </>
       )}
 

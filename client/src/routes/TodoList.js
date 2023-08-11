@@ -4,7 +4,8 @@ import { Button, TextField, List, ListItem, ListItemText, Checkbox, Collapse } f
 import axios from 'axios';
 import '../styles/TodoList.scss';
 
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, setTodos }) => {
+  const [pomodoros, setPomodoros] = useState([]);
   const [inputTitle, setInputTitle] = useState(''); // state for the title input
   const [inputDescription, setInputDescription] = useState(''); // state for the description input
   const [error, setError] = useState(false);
@@ -25,7 +26,8 @@ const TodoList = ({ todos }) => {
       };
       const response = await axios.post('/tasks', newTask);
       // update the state with the new task
-      todos.push(response.data['tasks'][0]);
+      setTodos([...todos, response.data['tasks'][0]])
+      // todos.push(response.data['tasks'][0]);
       setInputTitle('');
       setInputDescription('');
       setError(false);
@@ -44,7 +46,20 @@ const TodoList = ({ todos }) => {
       await axios.post(`/tasks/${id}/edit`, task);
 
       // add this line to update the state with the toggled task
-      todos.splice(todos.indexOf(task), 1, task);
+      todos.splice(todos.indexOf(task), 1, task)
+      setTodos([...todos]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleContinueTodo = async (id) => {
+    try {
+      // find the task by id in the state
+      const task = todos.find(todo => todo.id === id);
+      const response = await axios.get(`/tasks/${id}/pomodoros`);
+
+      setPomodoros([response.data['pomodoros']]);
+      console.log(response.data)
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +76,8 @@ const TodoList = ({ todos }) => {
       await axios.post(`/tasks/${id}/delete`);
 
       // remove the task by id from the state
-      todos.splice(todos.findIndex(todo => todo.id === id), 1);
+      todos.splice(todos.findIndex(todo => todo.id === id), 1)
+      setTodos([...todos]);
     } catch (error) {
       console.error(error);
     }
@@ -78,19 +94,23 @@ const TodoList = ({ todos }) => {
           onChange={(e) => setInputTitle(e.target.value)}
           error={error}
           helperText={error ? 'Task title cannot be empty' : ''}
+          multiline
+          rows={2}
         />
-        <TextField style={{width: '40vw'}}
+        <TextField style={{width: '40vw' }}
           label='Add a new task description (optional)'
           variant='outlined'
           value={inputDescription}
           onChange={(e) => setInputDescription(e.target.value)}
+          multiline
+          rows={3}
         />
         <Button
           variant='contained'
           color='primary'
           onClick={handleAddTodo}
         >
-          Add
+          Add Todo
         </Button>
       </div>
       <div className='todo-list'>
@@ -111,6 +131,13 @@ const TodoList = ({ todos }) => {
                     />
                   </div>
                   <div className='todo-delete'>
+                    <Button
+                      variant='outlined'
+                      color='secondary'
+                      onClick={() => handleContinueTodo(todo.id)}
+                    >
+                      Continue
+                    </Button>
                     <Button
                       variant='outlined'
                       color='secondary'

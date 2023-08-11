@@ -7,6 +7,11 @@ const getAllPomodoros = () => {
 		return data.rows;
 	})
 }
+const getAllInterruptions = pomodoros_id => {
+	return db.query("SELECT * FROM interruptions WHERE pomodoros_id = $1 ORDER BY id;", [pomodoros_id]).then(data => {
+		return data.rows;
+	})
+}
 
 const getPomodoroById = id => {
 	return db.query("SELECT * FROM pomodoros WHERE id = $1 ORDER BY id;", [id]).then(data => {
@@ -44,4 +49,4 @@ const deletePomodoro = id => {
 	})
 }
 
-module.exports = {getAllPomodoros, getPomodoroById, getPomodoroByUserId, getPomodoroByTaskId, addPomodoro, editPomodoro, deletePomodoro}
+module.exports = {getAllPomodoros, getAllInterruptions, getPomodoroById, getPomodoroByUserId, getPomodoroByTaskId, addPomodoro, editPomodoro, deletePomodoro}

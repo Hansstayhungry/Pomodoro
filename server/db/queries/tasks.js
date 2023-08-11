@@ -8,6 +8,12 @@ const getAllTasks = () => {
 	})
 }
 
+const getAllPomodoros = task_id => {
+	return db.query("SELECT * FROM pomodoros WHERE task_id = $1 ORDER BY id;", [task_id]).then(data => {
+		return data.rows;
+	})
+}
+
 const getTaskById = id => {
 	return db.query("SELECT * FROM tasks; WHERE id = $1", [id]).then(data => {
 		return data.rows;
@@ -37,4 +43,4 @@ const deleteTask = id => {
 		return data.rows;
 	})
 }
-module.exports = {getAllTasks, getTaskById, getTaskByUserId, addTask, editTask, deleteTask}
+module.exports = {getAllTasks, getAllPomodoros, getTaskById, getTaskByUserId, addTask, editTask, deleteTask}
