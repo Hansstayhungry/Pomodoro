@@ -1,0 +1,74 @@
+// TodoList.scss
+.pomodoro-todo-list {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.add-todo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  // max-height: 300px;
+  // overflow-y: auto;
+  
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.todo-superscript {
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+  background-color: transparent;
+  position: relative;
+  width: 100%;
+}
+
+.todo-title {
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+  background-color: transparent;
+  position: relative; 
+  width: 100%;
+}
+
+.todo-delete {
+  display: flex;
+  flex-direction: row;
+  justify-content:end;
+  align-items: center;
+  background-color: transparent;
+  position: relative; 
+  right:0; 
+}
+
+.todo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-start;
+  background-color: transparent;
+  width: 40vw;
+  word-wrap: break-word; 
+}

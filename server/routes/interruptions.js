@@ -10,13 +10,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  interruptions.addInterruption(req.params.start_time, req.params.end_time, req.params.pomodoros_id).then(data => {
+  interruptions.addInterruption(req.body.start_time, req.body.end_time, req.body.pomodoros_id).then(data => {
     console.log(data);
     res.json({interruptions: data});
   })
 });
 router.post('/:id/edit', (req, res) => {
-  interruptions.editInterruption(req.params.id, req.params.start_time, req.params.end_time).then(data => {
+  interruptions.editInterruption(req.params.id, req.body.start_time, req.body.end_time).then(data => {
     console.log(data);
     res.json({interruptions: data});
   })
