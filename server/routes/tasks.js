@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  tasks.addTask(req.body.title, req.body.description, req.body.status, req.body.user_id).then(data => {
+  tasks.addTask(req.body.title, req.body.description, req.body.status, req.cookies['user_id']).then(data => {
     console.log(data);
     res.json({tasks: data});
   })

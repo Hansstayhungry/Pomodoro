@@ -23,7 +23,6 @@ const TodoList = ({ todos, setTodos }) => {
         title: inputTitle,
         description: inputDescription,
         status: 'pending',
-        user_id: 1 // change this to match your user id
       };
       const response = await axios.post('/tasks', newTask);
       // update the state with the new task
@@ -53,10 +52,12 @@ const TodoList = ({ todos, setTodos }) => {
       console.error(error);
     }
   };
-  const handleContinueTodo = async (id) => {
+  const handleStartTodo = async (id) => {
     try {
       // find the task by id in the state
       const task = todos.find(todo => todo.id === id);
+      task.status = task.status === 'pending' ? 'in progress' : 'in progress';
+      await axios.post(`/tasks/${id}/edit`, task);
       const response = await axios.get(`/tasks/${id}/pomodoros`);
 
       setPomodoros([response.data['pomodoros']]);
@@ -132,13 +133,13 @@ const TodoList = ({ todos, setTodos }) => {
                     />
                   </div>
                   <div className='todo-buttons'>
-                    <Button
+                    {todo.status !== 'completed' && <Button
                       variant='outlined'
                       color='secondary'
-                      onClick={() => handleContinueTodo(todo.id)}
+                      onClick={() => handleStartTodo(todo.id)}
                     >
-                      Continue
-                    </Button>
+                      Do
+                    </Button>}
                     <Button
                       variant='outlined'
                       color='secondary'
