@@ -7,10 +7,7 @@ import { Button, TextField, Typography } from "@mui/material"
 import "../styles/Timer.scss"
 
 const Timer = (props) => {
-  // load audio
-  const endOfBreakAudioRef = useRef(null);
-  const endOfFocusAudioRef = useRef(null);
-  const {workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats,timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat} = props;
+  const {workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats,timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat, endOfBreakAudioRef, endOfFocusAudioRef} = props;
 
   // set timer
   const minutes = Math.floor(timeLeft / 60);
@@ -57,7 +54,7 @@ const Timer = (props) => {
 
   const handleEnd = () => {
     setIsActive(false);
-    setCurrentRepeat(0);
+    setCurrentRepeat(1);
     setTimeLeft(workTime);
     setIsBreakTime(false);
     setHasStarted(false);
