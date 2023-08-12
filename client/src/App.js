@@ -97,7 +97,8 @@ function App() {
       console.log(audioData)
       setAudio(audioData);
     }
-    async function fetchTasksData() {
+
+    async function fetchTasksData () {
       const tasksResponse = await fetch(GET_TASKS);
       let tasksData = await tasksResponse.json();
       tasksData = tasksData['tasks'];
