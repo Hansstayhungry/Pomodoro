@@ -1,6 +1,6 @@
 import './App.scss';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Timer from './routes/Timer';
 import TodoList from './routes/TodoList';
@@ -37,6 +37,8 @@ function App() {
   const [isActive, setIsActive] = useState(false);
   const [isBreakTime, setIsBreakTime] = useState(false);
   const [currentRepeat, setCurrentRepeat] = useState(1);
+  const endOfBreakAudioRef = useRef(null);
+  const endOfFocusAudioRef = useRef(null);
 
   // TodoList State
   const [todos, setTodos] = useState([]);
@@ -117,7 +119,7 @@ function App() {
       <div className='main-container'>
         {showHome && (
           <>
-            <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} />
+            <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} endOfBreakAudioRef={endOfBreakAudioRef} endOfFocusAudioRef={endOfFocusAudioRef} />
 
             <TodoList todos={todos} setTodos={setTodos} pomodoros={pomodoros} setPomodoros={setPomodoros} inputTitle={inputTitle} setInputTitle={setInputTitle} inputDescription={inputDescription} setInputDescription={setInputDescription} error={error} setError={setError} open={open} setOpen={setOpen} />
           </>
