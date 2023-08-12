@@ -12,13 +12,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const Signup = (props) => {
 
-  const { handleSignIn } = props;
+  const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser} = props;
 
   const customTheme = createTheme({
     palette: {
@@ -28,13 +29,26 @@ const Signup = (props) => {
     },
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      first_name: data.get('firstName'), 
+      last_name: data.get('lastName'), 
+      email: data.get('email'), 
+      password: data.get('password')
     });
+    const newUser = {
+      first_name: data.get('firstName'), 
+      last_name: data.get('lastName'), 
+      email: data.get('email'), 
+      password: data.get('password')
+    };
+    const response = await axios.post('/users/register', newUser);
+    if(response.data['users'].length > 0){
+      setLoggedInUser(response.data['users'][0]['email']);
+      handleHomeToggle();
+    }
   };
 
   return (

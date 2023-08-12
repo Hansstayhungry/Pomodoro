@@ -6,31 +6,11 @@ import endOfFocusAudio from '../assets/end-of-focus.wav';
 import { Button, TextField, Typography } from "@mui/material"
 import "../styles/Timer.scss"
 
-const Timer = () => {
+const Timer = (props) => {
   // load audio
   const endOfBreakAudioRef = useRef(null);
   const endOfFocusAudioRef = useRef(null);
-
-  // focus time
-  const [workTime, setWorkTime] = useState(45 * 60); // Default to 45 mins
-
-  // break time
-  const [breakTime, setBreakTime] = useState(15 * 60); // Default to 15 mins
-
-  // numbers of repeat
-  const [repeats, setRepeats] = useState(4); // Default to 4 repeats (work + break sessions)
-
-  // track timer between focus and break
-  const [timeLeft, setTimeLeft] = useState(workTime);
-
-  // track if timer is in session
-  const [isActive, setIsActive] = useState(false);
-
-  // use for toggle focus or break time
-  const [isBreakTime, setIsBreakTime] = useState(false);
-
-  // track current reapeat
-  const [currentRepeat, setCurrentRepeat] = useState(0);
+  const {workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats,timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat} = props;
 
   // set timer
   const minutes = Math.floor(timeLeft / 60);

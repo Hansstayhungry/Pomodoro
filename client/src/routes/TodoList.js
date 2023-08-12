@@ -4,12 +4,10 @@ import { Button, TextField, List, ListItem, ListItemText, Checkbox, Collapse } f
 import axios from 'axios';
 import '../styles/TodoList.scss';
 
-const TodoList = ({ todos, setTodos }) => {
-  const [pomodoros, setPomodoros] = useState([]);
-  const [inputTitle, setInputTitle] = useState(''); // state for the title input
-  const [inputDescription, setInputDescription] = useState(''); // state for the description input
-  const [error, setError] = useState(false);
-  const [open, setOpen] = useState({}); // state to keep track of which todo is expanded
+const TodoList = (props) => {
+
+  const {todos, setTodos, pomodoros, setPomodoros, inputTitle, setInputTitle,inputDescription, setInputDescription, error, setError, open, setOpen} = props;
+  
 
   const handleAddTodo = async () => {
     if (inputTitle.trim() === '') {
@@ -22,7 +20,6 @@ const TodoList = ({ todos, setTodos }) => {
         title: inputTitle,
         description: inputDescription,
         status: 'pending',
-        user_id: 1 // change this to match your user id
       };
       const response = await axios.post('/tasks', newTask);
       // update the state with the new task
@@ -52,10 +49,12 @@ const TodoList = ({ todos, setTodos }) => {
       console.error(error);
     }
   };
-  const handleContinueTodo = async (id) => {
+  const handleStartTodo = async (id) => {
     try {
       // find the task by id in the state
       const task = todos.find(todo => todo.id === id);
+      task.status = task.status === 'pending' ? 'in progress' : 'in progress';
+      await axios.post(`/tasks/${id}/edit`, task);
       const response = await axios.get(`/tasks/${id}/pomodoros`);
 
       setPomodoros([response.data['pomodoros']]);
@@ -87,7 +86,7 @@ const TodoList = ({ todos, setTodos }) => {
     <div className='pomodoro-todo-list'>
       <h2>Todo List</h2>
       <div className='add-todo'>
-        <TextField style={{width: '40vw', position: 'relative'}}
+        <TextField style={{width: '40vw'}}
           label='Add a new task title'
           variant='outlined'
           value={inputTitle}
@@ -114,9 +113,9 @@ const TodoList = ({ todos, setTodos }) => {
         </Button>
       </div>
       <div className='todo-list'>
-        <List style={{ position: 'relative'}}>
+        <List>
           {todos.map((todo) => (
-            <ListItem key={todo.id}>
+            <ListItem key={todo.id} >
               <div className='todo'>
                 <div className='todo-superscript'>
                   <div className='todo-title'>
@@ -130,14 +129,14 @@ const TodoList = ({ todos, setTodos }) => {
                       onClick={() => handleExpandTodo(todo.id)}
                     />
                   </div>
-                  <div className='todo-delete'>
-                    <Button
+                  <div className='todo-buttons'>
+                    {todo.status !== 'completed' && <Button
                       variant='outlined'
                       color='secondary'
-                      onClick={() => handleContinueTodo(todo.id)}
+                      onClick={() => handleStartTodo(todo.id)}
                     >
-                      Continue
-                    </Button>
+                      Do
+                    </Button>}
                     <Button
                       variant='outlined'
                       color='secondary'
