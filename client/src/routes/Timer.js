@@ -3,14 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField, Typography } from "@mui/material"
 import "../styles/Timer.scss"
 
-const Timer = () => {
-  const [workTime, setWorkTime] = useState(45 * 60); // Default to 45 mins
-  const [breakTime, setBreakTime] = useState(5 * 60); // Default to 15 mins
-  const [repeats, setRepeats] = useState(4); // Default to 4 repeats (work + break sessions)
-  const [timeLeft, setTimeLeft] = useState(workTime);
-  const [isActive, setIsActive] = useState(false);
-  const [isBreakTime, setIsBreakTime] = useState(false);
-  const [currentRepeat, setCurrentRepeat] = useState(1);
+const Timer = (props) => {
+  const {workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats,timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat} = props;
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = (timeLeft - minutes * 60).toString().padStart(2, "0");

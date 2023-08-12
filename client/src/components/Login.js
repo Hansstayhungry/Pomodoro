@@ -21,7 +21,7 @@ import '../styles/Login.scss'
 
 const Signin = (props) => {
 
-  const { handleHomeToggle, handleSignUp } = props;
+  const { handleHomeToggle, handleSignUp, loggedInUser, setLoggedInUser } = props;
 
   const customTheme = createTheme({
     palette: {
@@ -44,6 +44,7 @@ const Signin = (props) => {
     };
     const response = await axios.post('/users/login', loginUser);
     if(response.data['users'].length > 0){
+      setLoggedInUser(response.data['users'][0]['email']);
       handleHomeToggle();
     }
   };

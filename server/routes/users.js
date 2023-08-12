@@ -63,6 +63,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
+  console.log('logging out 2');
   res.clearCookie('user_id');
 });
 

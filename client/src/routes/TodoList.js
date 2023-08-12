@@ -4,12 +4,9 @@ import { Button, TextField, List, ListItem, ListItemText, Checkbox, Collapse } f
 import axios from 'axios';
 import '../styles/TodoList.scss';
 
-const TodoList = ({ todos, setTodos }) => {
-  const [pomodoros, setPomodoros] = useState([]);
-  const [inputTitle, setInputTitle] = useState(''); // state for the title input
-  const [inputDescription, setInputDescription] = useState(''); // state for the description input
-  const [error, setError] = useState(false);
-  const [open, setOpen] = useState({}); // state to keep track of which todo is expanded
+const TodoList = (props) => {
+
+  const {todos, setTodos, pomodoros, setPomodoros, inputTitle, setInputTitle,inputDescription, setInputDescription, error, setError, open, setOpen} = props;
   
 
   const handleAddTodo = async () => {
