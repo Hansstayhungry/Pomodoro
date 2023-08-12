@@ -95,8 +95,8 @@ function App() {
         {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick}
         />}
 
-        {showLogin && <Login open={showLogin} handleSignIn={handleSignIn} handleSignUp={handleSignUp} />}
-        {showSignup && <SignUp open={showSignup} handleSignUp={handleSignUp} handleSignIn={handleSignIn} />}
+        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} />}
+        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} />}
 
         <Dashboard />
         <Footer />
