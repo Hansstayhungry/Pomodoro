@@ -10,6 +10,13 @@ router.get('/', (req, res) => {
   })
 });
 
+router.get('/:id', (req, res) => {
+  users.getUserById().then(data => {
+    console.log(data);
+    res.json({ users: data });
+  })
+});
+
 router.post('/:id/edit', (req, res) => {
   users.editUser(req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.password).then(data => {
     console.log(data);
