@@ -81,15 +81,20 @@ function App() {
   }
 
   const handleSignOut = async () => {
-    console.log('logging out 1');
-    const response = await axios.post('/users/logout');
-    console.log(response);
-    setLoggedInUser('');
-    setShowLogin(true);
-    setShowAmbient(false);
-    setShowHome(false);
-    setShowSignUp(false);  
-    console.log('logging out 3');
+    try {
+      console.log('logging out 1');
+      const response = await axios.post('/users/logout');
+      console.log(response);
+      
+      setLoggedInUser('');
+      setShowLogin(true);
+      setShowAmbient(false);
+      setShowHome(false);
+      setShowSignUp(false)   
+      console.log('logging out 3');         
+    } catch (error) {
+      console.error('Error during sign out', error)
+    }
   }
 
   useEffect(() => {
