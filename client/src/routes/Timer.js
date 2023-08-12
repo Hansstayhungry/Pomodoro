@@ -1,17 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
+import endOfBreakAudio from '../assets/end-of-break.wav';
+import endOfFocusAudio from '../assets/end-of-focus.wav';
 
 import { Button, TextField, Typography } from "@mui/material"
 import "../styles/Timer.scss"
 
 const Timer = () => {
-  const [workTime, setWorkTime] = useState(45 * 60); // Default to 45 mins
-  const [breakTime, setBreakTime] = useState(5 * 60); // Default to 15 mins
-  const [repeats, setRepeats] = useState(4); // Default to 4 repeats (work + break sessions)
-  const [timeLeft, setTimeLeft] = useState(workTime);
-  const [isActive, setIsActive] = useState(false);
-  const [isBreakTime, setIsBreakTime] = useState(false);
-  const [currentRepeat, setCurrentRepeat] = useState(1);
+  // load audio
+  const endOfBreakAudioRef = useRef(null);
+  const endOfFocusAudioRef = useRef(null);
 
+  // focus time
+  const [workTime, setWorkTime] = useState(45 * 60); // Default to 45 mins
+
+  // break time
+  const [breakTime, setBreakTime] = useState(15 * 60); // Default to 15 mins
+
+  // numbers of repeat
+  const [repeats, setRepeats] = useState(4); // Default to 4 repeats (work + break sessions)
+
+  // track timer between focus and break
+  const [timeLeft, setTimeLeft] = useState(workTime);
+
+  // track if timer is in session
+  const [isActive, setIsActive] = useState(false);
+
+  // use for toggle focus or break time
+  const [isBreakTime, setIsBreakTime] = useState(false);
+
+  // track current reapeat
+  const [currentRepeat, setCurrentRepeat] = useState(0);
+
+  // set timer
   const minutes = Math.floor(timeLeft / 60);
   const seconds = (timeLeft - minutes * 60).toString().padStart(2, "0");
 
@@ -22,14 +43,25 @@ const Timer = () => {
       interval = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
+
+    // clear interval when time is up
     } else if (timeLeft === 0) {
       clearInterval(interval);
+
+      // check if need to go ahead to break time, and vice versa
       if (currentRepeat < repeats) {
         setIsBreakTime(!isBreakTime);
-        setCurrentRepeat((prevRepeat) => prevRepeat + 1);
         setTimeLeft(isBreakTime ? workTime : breakTime);
+        setCurrentRepeat((prevRepeat) => prevRepeat + 1);
+
+        // Play audio based on timer type
+        if (isBreakTime) {
+          endOfFocusAudioRef.current.play();
+        } else {
+          endOfBreakAudioRef.current.play();
+        }
       } else {
-        setIsActive(false); // All repeats completed, stop the timer
+        handleEnd(); // All repeats completed, stop the timer
       }
     }
 
@@ -37,16 +69,10 @@ const Timer = () => {
   }, [isActive, timeLeft, workTime, breakTime, isBreakTime, currentRepeat, repeats]);
 
   const handleToggle = () => {
-    if (!isActive) {
-      setIsActive(true);
-      if (timeLeft === 0) {
-        setCurrentRepeat(0);
-        setIsBreakTime(false);
-        setTimeLeft(workTime);
-      }
-    } else {
-      setIsActive(false);
+    if (!hasStarted) {
+      setHasStarted(true);
     }
+    setIsActive(!isActive);
   };
 
   const handleEnd = () => {
@@ -54,6 +80,7 @@ const Timer = () => {
     setCurrentRepeat(0);
     setTimeLeft(workTime);
     setIsBreakTime(false);
+    setHasStarted(false);
   };
 
   const handleWorkTimeChange = (event) => {
@@ -74,17 +101,34 @@ const Timer = () => {
     setRepeats(event.target.value);
   };
 
+  const [hasStarted, setHasStarted] = useState(false); // Track whether the user has clicked "Start"
+
   return (
     <div className="timer">
-      <Typography variant='h5' >{isBreakTime ? "Break Time" : "Work Time"}</Typography>
-      <Typography variant='h2'>
+
+      <audio ref={endOfBreakAudioRef}>
+        <source src={endOfBreakAudio} type="audio/mpeg" />
+      </audio>
+      <audio ref={endOfFocusAudioRef}>
+        <source src={endOfFocusAudio} type="audio/mpeg" />
+      </audio>
+
+      <Typography variant="h5">{isBreakTime ? "Break Time" : "Work Time"}</Typography>
+      <Typography variant="h2">
         {minutes}:{seconds}
       </Typography>
       <div className="buttons">
-        <Button onClick={handleToggle}>{isActive ? "Pause" : "Start"}</Button>
-        <Button onClick={handleEnd}>End</Button>
+        {hasStarted && ( // Show "Pause/Resume" and "End" buttons if the user has started the timer
+          <>
+            <Button onClick={handleToggle}>{isActive ? "Pause" : "Resume"}</Button>
+            <Button onClick={handleEnd}>End</Button>
+          </>
+        )}
+        {!hasStarted && ( // Show "Start" button if the user has not started the timer
+          <Button onClick={handleToggle}>Start</Button>
+        )}
       </div>
-      <div className="settings">
+      {!hasStarted && (<div className="settings">
         <label>
           Work Time (minutes):
           <input
@@ -112,7 +156,7 @@ const Timer = () => {
             min="1"
           />
         </label>
-      </div>
+      </div>)}
     </div>
   );
 };
