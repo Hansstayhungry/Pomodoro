@@ -8,6 +8,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Ambient from './components/Ambient';
 import Login from './components/Login';
+import axios from 'axios';
+import './styles/App.scss';
 
 // import { Typography, AppBar, Card, CardActions, CardContent, 
 //   CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
@@ -58,15 +60,15 @@ function App() {
     setShowAmbient(false);
     setShowLogin(false)
   }
-  
+
   useEffect(() => {
-    async function fetchAudioData () {
+    async function fetchAudioData() {
       const audioResponse = await fetch(GET_AUDIO);
       const audioData = await audioResponse.json();
       console.log(audioData)
       setAudio(audioData);
     }
-    async function fetchTasksData () {
+    async function fetchTasksData() {
       const tasksResponse = await fetch(GET_TASKS);
       let tasksData = await tasksResponse.json();
       tasksData = tasksData['tasks'];
@@ -80,27 +82,26 @@ function App() {
   return (
     <div className='App'>
 
-      <Header audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
-      handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
-      {showHome && (
-        <>
-          <Timer />
-          <TodoList todos={todos} setTodos={setTodos} />
-        </>
-      )}
+      <Header className='header' audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
+        handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
+      <div className='main-container'>
+        {showHome && (
+          <>
+            <Timer />
+            <TodoList todos={todos} setTodos={setTodos} />
+          </>
+        )}
 
-      {showAmbient && <Ambient audio = {audio} handleAudioClick ={handleAudioClick}
-      />}
+        {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick}
+        />}
 
-      {showLogin &&  <Login open={showLogin} handleSignIn={handleSignIn} handleSignUp ={handleSignUp} />}
-      {showSignup &&  <SignUp open={showSignup} handleSignUp ={handleSignUp} handleSignIn={handleSignIn} />}
+        {showLogin && <Login open={showLogin} handleSignIn={handleSignIn} handleSignUp={handleSignUp} />}
+        {showSignup && <SignUp open={showSignup} handleSignUp={handleSignUp} handleSignIn={handleSignIn} />}
 
-      <Dashboard />
-      <Footer />
-      
-
-
-    </div>
+        <Dashboard />
+        <Footer />
+      </div>
+    </div >
   );
 }
 

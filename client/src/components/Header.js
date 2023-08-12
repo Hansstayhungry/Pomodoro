@@ -22,7 +22,7 @@ const Header = (props) => {
 
   return (
     <ThemeProvider theme={customTheme}>
-      <AppBar position="static" className="header-container">
+      <AppBar position="fixed" className="header-container">
         <Toolbar>
           <Grid container alignItems="center" className="gridbar">
             <img src={logo} />

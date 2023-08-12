@@ -1,5 +1,5 @@
 // db/queries/users.js
-
+const bcrypt = require('bcrypt');
 const db = require('../../configs/db.config');
 
 const getAllUsers = () => {
@@ -26,14 +26,16 @@ const getUserByEmail = email => {
 	})
 }
 
-const addUser = (first_name, last_name, email, password, created_at, updated_at) => {
-	return db.query("INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [first_name, last_name, email, password, created_at, updated_at]).then(data => {
+const addUser = (first_name, last_name, email, password) => {
+	const hashedPassword = bcrypt.hashSync(password, 10);
+	return db.query("INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [first_name, last_name, email, hashedPassword, now(), now()]).then(data => {
 		return data.rows;
 	})
 }
 
-const editUser = (id, first_name, last_name, email, password, updated_at) => {
-	return db.query("UPDATE users SET first_name = $1, last_name = $2, email = $3, password = $4, updated_at = $5 WHERE id = $6 RETURNING *", [first_name, last_name, email, password,  updated_at, id]).then(data => {
+const editUser = (id, first_name, last_name, email, password) => {
+	const hashedPassword = bcrypt.hashSync(password, 10);
+	return db.query("UPDATE users SET first_name = $1, last_name = $2, email = $3, password = $4, updated_at = $5 WHERE id = $6 RETURNING *", [first_name, last_name, email, hashedPassword,  now(), id]).then(data => {
 		return data.rows;
 	})
 }

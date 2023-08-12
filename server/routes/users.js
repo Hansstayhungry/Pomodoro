@@ -10,13 +10,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  users.addUser(req.body.first_name, req.body.last_name, req.body.email, md5(req.body.password), now(), now()).then(data => {
+  users.addUser(req.body.first_name, req.body.last_name, req.body.email, req.body.password).then(data => {
     console.log(data);
     res.json({users: data});
   })
 });
 router.post('/:id/edit', (req, res) => {
-  users.editUser(req.params.id, req.body.first_name, req.body.last_name, req.body.email, md5(req.body.password), now()).then(data => {
+  users.editUser(req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.password).then(data => {
     console.log(data);
     res.json({users: data});
   })
