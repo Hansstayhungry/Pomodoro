@@ -34,7 +34,7 @@ router.post('/:id/delete', (req, res) => {
 router.post('/register', (req, res) => {
   users.getUserByEmail(req.body.email).then((user) => {
     if (req.body.first_name === "" || req.body.last_name === "" || req.body.email === "" || req.body.password === "") {
-      res.status(400).send('Invalid email or password');
+      res.status(400).send('Invalid input');
     } else if (user[0]) {
       res.status(400).send('Email is already registered');
     } else {
@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   users.getUserByEmail(req.body.email).then((user) => {
     if (req.body.email === "" || req.body.password === "") {
-      res.status(400).send('Invalid email or password');
+      res.status(200).send('Log in is successful');
     } else if (user.length > 0 && bcrypt.compareSync(req.body.password, user[0]['password'])) {
       console.log(user);
       res.cookie('user_id', user[0]['id']);
@@ -65,6 +65,7 @@ router.post('/login', (req, res) => {
 router.post('/logout', (req, res) => {
   console.log('logging out 2');
   res.clearCookie('user_id');
+  return res.status(200).send('Log out is successful');
 });
 
 module.exports = router;
