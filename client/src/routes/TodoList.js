@@ -10,6 +10,7 @@ const TodoList = ({ todos, setTodos }) => {
   const [inputDescription, setInputDescription] = useState(''); // state for the description input
   const [error, setError] = useState(false);
   const [open, setOpen] = useState({}); // state to keep track of which todo is expanded
+  
 
   const handleAddTodo = async () => {
     if (inputTitle.trim() === '') {
@@ -87,7 +88,7 @@ const TodoList = ({ todos, setTodos }) => {
     <div className='pomodoro-todo-list'>
       <h2>Todo List</h2>
       <div className='add-todo'>
-        <TextField style={{width: '40vw', position: 'relative'}}
+        <TextField style={{width: '40vw'}}
           label='Add a new task title'
           variant='outlined'
           value={inputTitle}
@@ -114,9 +115,9 @@ const TodoList = ({ todos, setTodos }) => {
         </Button>
       </div>
       <div className='todo-list'>
-        <List style={{ position: 'relative'}}>
+        <List>
           {todos.map((todo) => (
-            <ListItem key={todo.id}>
+            <ListItem key={todo.id} >
               <div className='todo'>
                 <div className='todo-superscript'>
                   <div className='todo-title'>
@@ -130,7 +131,7 @@ const TodoList = ({ todos, setTodos }) => {
                       onClick={() => handleExpandTodo(todo.id)}
                     />
                   </div>
-                  <div className='todo-delete'>
+                  <div className='todo-buttons'>
                     <Button
                       variant='outlined'
                       color='secondary'

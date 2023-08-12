@@ -25,6 +25,7 @@
   align-items: flex-start;
   // max-height: 300px;
   // overflow-y: auto;
+  margin-top: 25px;
   
 }
 
@@ -53,7 +54,7 @@
   width: 100%;
 }
 
-.todo-delete {
+.todo-buttons {
   display: flex;
   flex-direction: row;
   justify-content:end;
@@ -74,4 +75,7 @@
 }
 .todo-details {
   margin-left: 1vw;
+}
+h2 {
+  font-weight: 500;
 }
