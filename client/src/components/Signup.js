@@ -19,7 +19,7 @@ import axios from 'axios';
 
 const Signup = (props) => {
 
-  const { handleHomeToggle, handleSignIn } = props;
+  const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser} = props;
 
   const customTheme = createTheme({
     palette: {
@@ -46,6 +46,7 @@ const Signup = (props) => {
     };
     const response = await axios.post('/users/register', newUser);
     if(response.data['users'].length > 0){
+      setLoggedInUser(response.data['users'][0]['email']);
       handleHomeToggle();
     }
   };
