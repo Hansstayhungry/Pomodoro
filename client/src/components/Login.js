@@ -44,7 +44,12 @@ const Signin = (props) => {
     };
     const response = await axios.post('/users/login', loginUser);
     if(response.data['users'].length > 0){
-      setLoggedInUser(response.data['users'][0]['email']);
+      const userLoggedIn = {
+        id: response.data['users'][0]['id'], 
+        email: response.data['users'][0]['email']
+      };
+      setLoggedInUser(userLoggedIn);
+      console.log(userLoggedIn);
       handleHomeToggle();
     }
   };
