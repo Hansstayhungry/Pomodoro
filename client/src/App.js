@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Ambient from './components/Ambient';
 import Login from './components/Login';
 import axios from 'axios';
+import { useCookies } from "react-cookie";
 import './styles/App.scss';
 
 // import { Typography, AppBar, Card, CardActions, CardContent, 
@@ -20,7 +21,8 @@ function App() {
 
   const GET_AUDIO = '/audio/api/'
   const GET_TASKS = '/tasks'
-  const [loggedInUser, setLoggedInUser] = useState('');
+  const [cookies, setCookie] = useCookies();
+  const [loggedInUser, setLoggedInUser] = useState({});
 
   const [audio, setAudio] = useState([]);
   const [showAmbient, setShowAmbient] = useState(false);
@@ -85,19 +87,32 @@ function App() {
       console.log('logging out 1');
       const response = await axios.post('/users/logout');
       console.log(response);
-      
-      setLoggedInUser('');
+
+      setLoggedInUser({});
       setShowLogin(true);
       setShowAmbient(false);
       setShowHome(false);
-      setShowSignUp(false)   
-      console.log('logging out 3');         
+      setShowSignUp(false)
+      console.log('logging out 3');
     } catch (error) {
       console.error('Error during sign out', error)
     }
   }
 
   useEffect(() => {
+    async function fetchUser() {
+      console.log(cookies.user_id);
+      if(cookies.user_id && cookies.user_id > 0){
+        const response = await axios.get(`/users/${cookies.user_id}`);
+        console.log(response.data);
+        const userLoggedIn = {
+          id: response.data['users'][0]['id'], 
+          email: response.data['users'][0]['email']
+        };
+        setLoggedInUser(userLoggedIn);
+      }      
+    }
+    
     async function fetchAudioData() {
       const audioResponse = await fetch(GET_AUDIO);
       const audioData = await audioResponse.json();
@@ -105,22 +120,51 @@ function App() {
       setAudio(audioData);
     }
 
-    async function fetchTasksData () {
-      const tasksResponse = await fetch(GET_TASKS);
-      let tasksData = await tasksResponse.json();
-      tasksData = tasksData['tasks'];
-      console.log(tasksData)
-      setTodos(tasksData);
+    async function fetchTasksData() {
+      // const tasksResponse = await fetch(GET_TASKS);
+      // let tasksData = await tasksResponse.json();
+      // tasksData = tasksData['tasks'];
+      // console.log(tasksData)
+      // setTodos(tasksData);
+      // console.log(loggedInUser);
+      console.log('loggedInUser key length', Object.keys(loggedInUser).length);
+      if (Object.keys(loggedInUser).length > 0) {
+        try {
+          const response = await axios.get(`/users/${loggedInUser['id']}/tasks`);
+          console.log(response.data);
+          setTodos(response.data['tasks']);          
+        } catch (error) {
+          console.error('Error during sign out', error)
+        }
+      }
+
+
     }
-    fetchAudioData();
-    fetchTasksData();
+    fetchUser();
+    fetchAudioData();    
   }, [])
+
+  useEffect(() => {
+    async function fetchTasksData() {
+      console.log('loggedInUser key length', Object.keys(loggedInUser).length);
+      if (Object.keys(loggedInUser).length > 0) {
+        try {
+          const response = await axios.get(`/users/${loggedInUser['id']}/tasks`);
+          console.log(response.data);
+          setTodos(response.data['tasks']);          
+        } catch (error) {
+          console.error('Error during sign out', error)
+        }
+      }
+    }
+    fetchTasksData();   
+  }, [loggedInUser])
 
   return (
     <div className='App'>
 
       <Header className='header' audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
-        handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} handleSignOut={handleSignOut}/>
+        handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} handleSignOut={handleSignOut} />
       <div className='main-container'>
         {showHome && (
           <>
@@ -133,8 +177,8 @@ function App() {
         {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick}
         />}
 
-        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>}
-        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>}
+        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
+        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
 
         <Dashboard />
         <Footer />

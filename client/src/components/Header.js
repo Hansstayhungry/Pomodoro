@@ -29,7 +29,7 @@ const Header = (props) => {
             <Typography variant="h3" className='logo'>
               Doro - Your Personal Productivity Booster
             </Typography>
-            {loggedInUser == '' && <div className="auth-links">
+            {Object.keys(loggedInUser).length == 0 && <div className="auth-links">
               <Button onClick={handleSignIn} color="inherit" href="" className="auth-button">
                 Login
               </Button>
@@ -37,8 +37,8 @@ const Header = (props) => {
                 Sign Up
               </Button>
             </div>}
-            {loggedInUser !== '' && <div className="auth-links">
-              <p>Logged In As: {loggedInUser}</p>
+            {Object.keys(loggedInUser).length > 0 && <div className="auth-links">
+              <p>Logged In As: {loggedInUser['email']}</p>
               <Button onClick={async () => {await handleSignOut();}} color="inherit" href="" className="auth-button">
                 Logout
               </Button>

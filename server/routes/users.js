@@ -11,9 +11,16 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  users.getUserById().then(data => {
+  users.getUserById(req.params.id).then(data => {
     console.log(data);
     res.json({ users: data });
+  })
+});
+
+router.get('/:id/tasks', (req, res) => {
+  users.getAllTasks(req.params.id).then(data => {
+    console.log(data);
+    res.json({ tasks: data });
   })
 });
 
