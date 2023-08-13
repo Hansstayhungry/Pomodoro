@@ -91,7 +91,7 @@ const Timer = (props) => {
       </audio>
 
       <Typography variant="h5">{isBreakTime ? "Break Time" : "Work Time"}</Typography>
-      <Typography variant="h1">
+      <Typography variant="h2">
         {minutes}:{seconds}
       </Typography>
       <div className="buttons">
