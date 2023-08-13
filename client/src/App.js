@@ -1,5 +1,3 @@
-import './App.scss';
-
 import { useState, useEffect, useRef } from 'react';
 
 import Timer from './routes/Timer';
@@ -117,7 +115,7 @@ function App() {
   }, [])
 
   return (
-    <div className='App'>
+    <div className='app'>
 
       <Header className='header' audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
         handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} handleSignOut={handleSignOut}/>
