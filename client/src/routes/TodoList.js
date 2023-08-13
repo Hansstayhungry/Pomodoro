@@ -6,8 +6,8 @@ import '../styles/TodoList.scss';
 
 const TodoList = (props) => {
 
-  const {todos, setTodos, pomodoros, setPomodoros, inputTitle, setInputTitle,inputDescription, setInputDescription, error, setError, open, setOpen} = props;
-  
+  const { todos, setTodos, pomodoros, setPomodoros, inputTitle, setInputTitle, inputDescription, setInputDescription, error, setError, open, setOpen, loggedInUser, setLoggedInUser, cookies } = props;
+
 
   const handleAddTodo = async () => {
     if (inputTitle.trim() === '') {
@@ -31,6 +31,7 @@ const TodoList = (props) => {
     } catch (error) {
       console.error(error);
     }
+
   };
 
   const handleToggleTodo = async (id) => {
@@ -86,7 +87,7 @@ const TodoList = (props) => {
     <div className='pomodoro-todo-list'>
       <h2>Todo List</h2>
       <div className='add-todo'>
-        <TextField style={{width: '40vw'}}
+        <TextField style={{ width: '40vw' }}
           label='Add a new task title'
           variant='outlined'
           value={inputTitle}
@@ -96,7 +97,7 @@ const TodoList = (props) => {
           multiline
           rows={2}
         />
-        <TextField style={{width: '40vw' }}
+        <TextField style={{ width: '40vw' }}
           label='Add a new task description (optional)'
           variant='outlined'
           value={inputDescription}
@@ -119,11 +120,11 @@ const TodoList = (props) => {
               <div className='todo'>
                 <div className='todo-superscript'>
                   <div className='todo-title'>
-                    <Checkbox 
+                    <Checkbox
                       checked={todo.status === 'completed'}
                       onChange={() => handleToggleTodo(todo.id)}
                     />
-                    <ListItemText style={{width: '15vw'}}
+                    <ListItemText style={{ width: '15vw' }}
                       primary={todo.title}
                       className={todo.status === 'completed' ? 'completed' : ''}
                       onClick={() => handleExpandTodo(todo.id)}

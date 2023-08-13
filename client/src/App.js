@@ -18,7 +18,6 @@ import SignUp from './components/Signup';
 function App() {
 
   const GET_AUDIO = '/audio/api/'
-  const GET_TASKS = '/tasks'
   const [cookies, setCookie] = useCookies();
   const [loggedInUser, setLoggedInUser] = useState({});
 
@@ -109,34 +108,12 @@ function App() {
         };
         setLoggedInUser(userLoggedIn);
       }      
-    }
-    
+    }    
     async function fetchAudioData() {
       const audioResponse = await fetch(GET_AUDIO);
       const audioData = await audioResponse.json();
       console.log(audioData)
       setAudio(audioData);
-    }
-
-    async function fetchTasksData() {
-      // const tasksResponse = await fetch(GET_TASKS);
-      // let tasksData = await tasksResponse.json();
-      // tasksData = tasksData['tasks'];
-      // console.log(tasksData)
-      // setTodos(tasksData);
-      // console.log(loggedInUser);
-      console.log('loggedInUser key length', Object.keys(loggedInUser).length);
-      if (Object.keys(loggedInUser).length > 0) {
-        try {
-          const response = await axios.get(`/users/${loggedInUser['id']}/tasks`);
-          console.log(response.data);
-          setTodos(response.data['tasks']);          
-        } catch (error) {
-          console.error('Error during sign out', error)
-        }
-      }
-
-
     }
     fetchUser();
     fetchAudioData();    
@@ -153,6 +130,8 @@ function App() {
         } catch (error) {
           console.error('Error during sign out', error)
         }
+      } else {
+        setTodos([]);  
       }
     }
     fetchTasksData();   
@@ -166,14 +145,13 @@ function App() {
       <div className='main-container'>
         {showHome && (
           <>
-            <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} endOfBreakAudioRef={endOfBreakAudioRef} endOfFocusAudioRef={endOfFocusAudioRef} />
+            <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} endOfBreakAudioRef={endOfBreakAudioRef} endOfFocusAudioRef={endOfFocusAudioRef} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
 
-            <TodoList todos={todos} setTodos={setTodos} pomodoros={pomodoros} setPomodoros={setPomodoros} inputTitle={inputTitle} setInputTitle={setInputTitle} inputDescription={inputDescription} setInputDescription={setInputDescription} error={error} setError={setError} open={open} setOpen={setOpen} />
+            <TodoList todos={todos} setTodos={setTodos} pomodoros={pomodoros} setPomodoros={setPomodoros} inputTitle={inputTitle} setInputTitle={setInputTitle} inputDescription={inputDescription} setInputDescription={setInputDescription} error={error} setError={setError} open={open} setOpen={setOpen} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} cookies={cookies} />
           </>
         )}
 
-        {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick}
-        />}
+        {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick} />}
 
         {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
         {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
