@@ -28,7 +28,7 @@ const Timer = (props) => {
       clearInterval(interval);
 
       // check if need to go ahead to break time, and vice versa
-      if (currentRepeat < repeats) {
+      if (currentRepeat < repeats*2 ) {
         setIsBreakTime(!isBreakTime);
         setTimeLeft(isBreakTime ? workTime : breakTime);
         setCurrentRepeat((prevRepeat) => prevRepeat + 1);
@@ -178,10 +178,10 @@ const Timer = (props) => {
               InputLabelProps={{
                 shrink: true,
               }}
+              InputProps={{ inputProps: { min: 1 } }}
               variant="standard"
               value={workTime / 60}
               onChange={handleWorkTimeChange}
-              min="1"
             />
           <TextField
               id="outlined-number"
@@ -192,6 +192,7 @@ const Timer = (props) => {
               InputLabelProps={{
                 shrink: true,
               }}
+              InputProps={{ inputProps: { min: 1 } }}
               variant="standard"
               value={breakTime / 60}
               onChange={handleBreakTimeChange}
@@ -206,10 +207,10 @@ const Timer = (props) => {
               InputLabelProps={{
                 shrink: true,
               }}
+              InputProps={{ inputProps: { min: 1 } }}
               variant="standard"
               value={repeats}
               onChange={handleRepeatChange}
-              min="1"
             />                          
         </Box>
       </div>)}
