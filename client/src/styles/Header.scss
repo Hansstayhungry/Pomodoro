@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 15px;
   }
 
   img {
@@ -13,6 +13,11 @@
   .nav-bar {
     display: flex;
     justify-content: center;
+
+    .nav-bar-item {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
   }
 }
 
