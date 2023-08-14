@@ -19,7 +19,7 @@ import axios from 'axios';
 
 const Signup = (props) => {
 
-  const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser, signUpFirstNameError, setSignUpFirstNameError, signUpLastNameError, setSignUpLastNameError, signUpEmailError, setSignUpEmailError, signUpPasswordError, setSignUpPasswordError } = props;
+  const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser, signUpFirstNameError, setSignUpFirstNameError, signUpLastNameError, setSignUpLastNameError, signUpEmailError, setSignUpEmailError, signUpPasswordError, setSignUpPasswordError, setCookie } = props;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -67,6 +67,7 @@ const Signup = (props) => {
         id: response.data['users'][0]['id'],
         email: response.data['users'][0]['email']
       };
+      setCookie('user_id', response.data['users'][0]['id']);
       setLoggedInUser(userLoggedIn);
       console.log(userLoggedIn);
       handleHomeToggle();

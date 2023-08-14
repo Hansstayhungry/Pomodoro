@@ -157,7 +157,7 @@ function App() {
           // find the task by id in the state
           const task = todos.find(todo => todo.id === pomodoros['task_id']);
           // toggle its status between completed and pending
-          task.status = task.status === 'completed' ? 'pending' : 'completed';
+          task.status = 'completed';
           // update the task in the database with the new status
           await axios.post(`/tasks/${pomodoros['task_id']}/edit`, task);
     
@@ -190,9 +190,9 @@ function App() {
 
         {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick} />}
 
-        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginEmailError={loginEmailError} setLoginEmailError={setLoginEmailError} loginPasswordError={loginPasswordError} setLoginPasswordError={setLoginPasswordError}/>}
+        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginEmailError={loginEmailError} setLoginEmailError={setLoginEmailError} loginPasswordError={loginPasswordError} setLoginPasswordError={setLoginPasswordError} setCookie={setCookie}/>}
 
-        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} signUpFirstNameError={signUpFirstNameError} setSignUpFirstNameError={setSignUpFirstNameError} signUpLastNameError={signUpLastNameError} setSignUpLastNameError={setSignUpLastNameError} signUpEmailError={signUpEmailError} setSignUpEmailError={setSignUpEmailError} signUpPasswordError={signUpPasswordError} setSignUpPasswordError={setSignUpPasswordError} />}
+        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} signUpFirstNameError={signUpFirstNameError} setSignUpFirstNameError={setSignUpFirstNameError} signUpLastNameError={signUpLastNameError} setSignUpLastNameError={setSignUpLastNameError} signUpEmailError={signUpEmailError} setSignUpEmailError={setSignUpEmailError} signUpPasswordError={signUpPasswordError} setSignUpPasswordError={setSignUpPasswordError} setCookie={setCookie}/>}
 
         <Dashboard />
         <Footer />

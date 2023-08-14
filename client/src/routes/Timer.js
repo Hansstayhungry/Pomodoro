@@ -28,7 +28,7 @@ const Timer = (props) => {
       clearInterval(interval);
 
       // check if need to go ahead to break time, and vice versa
-      if (currentRepeat < repeats*2 ) {
+      if (currentRepeat < repeats * 2) {
         setIsBreakTime(!isBreakTime);
         setTimeLeft(isBreakTime ? workTime : breakTime);
         setCurrentRepeat((prevRepeat) => prevRepeat + 1);
@@ -49,48 +49,52 @@ const Timer = (props) => {
 
   const handleToggle = () => {
     try {
-      const pomodoro = {
-        user_id: cookies.user_id,
-        task_id: null
-      };
-      async function createNewPomodoro() {
-        let currentDate = new Date();
-        let currentTime = currentDate.getTime();
-        let workTimeMs = parseInt(workTime) * 1000;
-        let breakTimeMs = parseInt(breakTime) * 1000;
-        let totalTimeMs = (workTimeMs + breakTimeMs) * repeats;
-        let endTimeMs = currentTime + totalTimeMs;
-        let startDate = new Date(currentTime);
-        let endDate = new Date(endTimeMs);
-
-        // create new date objects with startDate and endDate
-        let startTime = new Date(startDate);
-        let endTime = new Date(endDate);
-
-        // convert date objects to ISO strings
-        let startTimeString = startTime.toISOString();
-        let endTimeString = endTime.toISOString();
-
-        const newPomodoro = {
-          focus_time: `${workTime / 60} minutes`,
-          break_time: `${breakTime / 60} minutes`,
-          repeat: repeats,
-          start_time: startTimeString,
-          estimated_end_time: endTimeString,
-          task_id: pomodoro['task_id'],
-          user_id: parseInt(pomodoro['user_id'], 10)
+      if (!hasStarted && !isActive) {
+        const pomodoro = {
+          user_id: cookies.user_id,
+          task_id: null
         };
-        console.log(newPomodoro);
-        const response = await axios.post('/pomodoros', newPomodoro);
-        setPomodoros({id: response.data['pomodoros'][0]['id'], user_id: newPomodoro.user_id, task_id: newPomodoro.task_id, complete: false});
-        console.log({id: response.data['pomodoros'][0]['id']});
-        if (!hasStarted) {
-          setHasStarted(true);
+        async function createNewPomodoro() {
+          let currentDate = new Date();
+          let currentTime = currentDate.getTime();
+          let workTimeMs = parseInt(workTime) * 1000;
+          let breakTimeMs = parseInt(breakTime) * 1000;
+          let totalTimeMs = (workTimeMs + breakTimeMs) * repeats;
+          let endTimeMs = currentTime + totalTimeMs;
+          let startDate = new Date(currentTime);
+          let endDate = new Date(endTimeMs);
+
+          // create new date objects with startDate and endDate
+          let startTime = new Date(startDate);
+          let endTime = new Date(endDate);
+
+          // convert date objects to ISO strings
+          let startTimeString = startTime.toISOString();
+          let endTimeString = endTime.toISOString();
+
+          const newPomodoro = {
+            focus_time: `${workTime / 60} minutes`,
+            break_time: `${breakTime / 60} minutes`,
+            repeat: repeats,
+            start_time: startTimeString,
+            estimated_end_time: endTimeString,
+            task_id: pomodoro['task_id'],
+            user_id: parseInt(pomodoro['user_id'], 10)
+          };
+          console.log(newPomodoro);
+          const response = await axios.post('/pomodoros', newPomodoro);
+          setPomodoros({ id: response.data['pomodoros'][0]['id'], user_id: newPomodoro.user_id, task_id: newPomodoro.task_id, complete: false });
+          console.log({ id: response.data['pomodoros'][0]['id'] });
+
         }
-        setIsActive(!isActive);
+        createNewPomodoro();
       }
-      createNewPomodoro();
-    } catch (error) {
+      if (!hasStarted) {
+        setHasStarted(true);
+      }
+      setIsActive(!isActive);
+    }
+    catch (error) {
       console.error(error);
     }
   };
@@ -112,7 +116,7 @@ const Timer = (props) => {
       // convert date objects to ISO strings
       let startTimeString = startTime.toISOString();
       const response = await axios.post(`/pomodoros/${pomodoros['id']}/edit`, { end_time: startTimeString });
-      setPomodoros({...pomodoros, complete: true});
+      setPomodoros({ ...pomodoros, complete: true });
       console.log(response.data);
     }
   };
@@ -170,48 +174,48 @@ const Timer = (props) => {
           autoComplete="off"
         >
           <TextField
-              id="outlined-number"
-              label=
-                "Focus Time (minutes):"
+            id="outlined-number"
+            label=
+            "Focus Time (minutes):"
 
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{ inputProps: { min: 1 } }}
-              variant="standard"
-              value={workTime / 60}
-              onChange={handleWorkTimeChange}
-            />
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{ inputProps: { min: 1 } }}
+            variant="standard"
+            value={workTime / 60}
+            onChange={handleWorkTimeChange}
+          />
           <TextField
-              id="outlined-number"
-              label=
-                "Break Time (minutes):"
+            id="outlined-number"
+            label=
+            "Break Time (minutes):"
 
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{ inputProps: { min: 1 } }}
-              variant="standard"
-              value={breakTime / 60}
-              onChange={handleBreakTimeChange}
-              min="1"
-            />
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{ inputProps: { min: 1 } }}
+            variant="standard"
+            value={breakTime / 60}
+            onChange={handleBreakTimeChange}
+            min="1"
+          />
           <TextField
-              id="outlined-number"
-              label=
-                "Number of Repeats"
+            id="outlined-number"
+            label=
+            "Number of Repeats"
 
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{ inputProps: { min: 1 } }}
-              variant="standard"
-              value={repeats}
-              onChange={handleRepeatChange}
-            />                          
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{ inputProps: { min: 1 } }}
+            variant="standard"
+            value={repeats}
+            onChange={handleRepeatChange}
+          />
         </Box>
       </div>)}
     </div>
