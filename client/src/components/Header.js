@@ -8,18 +8,6 @@ import '../styles/Header.scss';
 const Header = (props) => {
   const { handleAmbientToggle, handleHomeToggle, audioUrl, handleSignIn, handleSignUp, loggedInUser, setLoggedInUser, handleSignOut } = props;
 
-  // const customTheme = createTheme({
-  //   palette: {
-  //     primary: {
-  //       main: '#f2933f',
-  //     },
-  //     secondary: {
-  //       main: '#f2ce3f',
-  //     },
-  //   },
-  // });
-  
-
   return (
     <AppBar position="sticky" sx={{backgroundColor: 'orange'}} className="header-container">
       <Toolbar>

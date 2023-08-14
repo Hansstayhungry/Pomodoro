@@ -21,14 +21,6 @@ const Signup = (props) => {
 
   const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser, signUpFirstNameError, setSignUpFirstNameError, signUpLastNameError, setSignUpLastNameError, signUpEmailError, setSignUpEmailError, signUpPasswordError, setSignUpPasswordError } = props;
 
-  const customTheme = createTheme({
-    palette: {
-      background: {
-        default: '#FBCC9D', // Set sign up background colour
-      },
-    },
-  });
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -82,9 +74,7 @@ const Signup = (props) => {
   };
 
   return (
-    <ThemeProvider theme={customTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -170,7 +160,6 @@ const Signup = (props) => {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
 

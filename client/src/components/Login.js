@@ -22,13 +22,6 @@ const Signin = (props) => {
 
   const { handleHomeToggle, handleSignUp, loggedInUser, setLoggedInUser, loginEmailError, setLoginEmailError, loginPasswordError, setLoginPasswordError } = props;
 
-  const customTheme = createTheme({
-    palette: {
-      background: {
-        default: '#FBCC9D', // Set sign in background colour
-      },
-    },
-  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -68,9 +61,7 @@ const Signin = (props) => {
 
   return (
     <div className='loginContainer'>
-      <ThemeProvider theme={customTheme}>
         <Container component="main" maxWidth="xs">
-          <CssBaseline />
           <Box
             sx={{
               marginTop: 8,
@@ -128,7 +119,6 @@ const Signin = (props) => {
             </Box>
           </Box>
         </Container>
-      </ThemeProvider>
     </div>
 
   );
