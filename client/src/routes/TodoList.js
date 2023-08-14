@@ -1,13 +1,12 @@
 // TodoList.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextField, List, ListItem, ListItemText, Checkbox, Collapse } from '@mui/material';
 import axios from 'axios';
 import '../styles/TodoList.scss';
 
 const TodoList = (props) => {
 
-  const { todos, setTodos, pomodoros, setPomodoros, inputTitle, setInputTitle, inputDescription, setInputDescription, error, setError, open, setOpen, loggedInUser, setLoggedInUser, cookies } = props;
-
+  const { todos, setTodos, pomodoros, setPomodoros, inputTitle, setInputTitle, inputDescription, setInputDescription, error, setError, open, setOpen, loggedInUser, setLoggedInUser, cookies, workTime, breakTime, repeats, isActive, setIsActive, hasStarted, setHasStarted } = props;
 
   const handleAddTodo = async () => {
     if (inputTitle.trim() === '') {
@@ -54,12 +53,52 @@ const TodoList = (props) => {
     try {
       // find the task by id in the state
       const task = todos.find(todo => todo.id === id);
-      task.status = task.status === 'pending' ? 'in progress' : 'in progress';
+      task.status = 'in progress';
       await axios.post(`/tasks/${id}/edit`, task);
-      const response = await axios.get(`/tasks/${id}/pomodoros`);
+      setTodos([...todos]);
+      // const response = await axios.get(`/tasks/${id}/pomodoros`);
+      // console.log(response.data);
+      const pomodoro = {
+        user_id: cookies.user_id,
+        task_id: id
+      };
+      async function createNewPomodoro() {
+        let currentDate = new Date();
+        let currentTime = currentDate.getTime();
+        let workTimeMs = parseInt(workTime) * 1000;
+        let breakTimeMs = parseInt(breakTime) * 1000;
+        let totalTimeMs = (workTimeMs + breakTimeMs) * repeats;
+        let endTimeMs = currentTime + totalTimeMs;
+        let startDate = new Date(currentTime);
+        let endDate = new Date(endTimeMs);
 
-      setPomodoros([response.data['pomodoros']]);
-      console.log(response.data)
+        // create new date objects with startDate and endDate
+        let startTime = new Date(startDate);
+        let endTime = new Date(endDate);
+
+        // convert date objects to ISO strings
+        let startTimeString = startTime.toISOString();
+        let endTimeString = endTime.toISOString();
+
+        const newPomodoro = {
+          focus_time: `${workTime / 60} minutes`,
+          break_time: `${breakTime / 60} minutes`,
+          repeat: repeats,
+          start_time: startTimeString,
+          estimated_end_time: endTimeString,
+          task_id: pomodoro['task_id'],
+          user_id: parseInt(pomodoro['user_id'], 10)
+        };
+        console.log(newPomodoro);
+        const response = await axios.post('/pomodoros', newPomodoro);
+        setPomodoros({id: response.data['pomodoros'][0]['id'], user_id: cookies.user_id, task_id: id, complete: false});
+        console.log({id: response.data['pomodoros'][0]['id']});
+        if (!hasStarted) {
+          setHasStarted(true);
+        }
+        setIsActive(!isActive);
+      }
+      createNewPomodoro();
     } catch (error) {
       console.error(error);
     }
@@ -117,7 +156,7 @@ const TodoList = (props) => {
         <List>
           {todos.map((todo) => (
             <ListItem key={todo.id} >
-              <div className='todo'>
+              <div className='todo' style={{ backgroundColor: todo.status === 'in progress' ? 'orange' : 'transparent' }}>
                 <div className='todo-superscript'>
                   <div className='todo-title'>
                     <Checkbox
@@ -131,7 +170,7 @@ const TodoList = (props) => {
                     />
                   </div>
                   <div className='todo-buttons'>
-                    {todo.status !== 'completed' && <Button
+                    {todo.status == 'pending' && <Button
                       variant='outlined'
                       color='secondary'
                       onClick={() => handleStartTodo(todo.id)}
