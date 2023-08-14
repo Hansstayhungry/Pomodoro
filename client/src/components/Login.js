@@ -20,7 +20,7 @@ import '../styles/Login.scss'
 
 const Signin = (props) => {
 
-  const { handleHomeToggle, handleSignUp, loggedInUser, setLoggedInUser, loginEmailError, setLoginEmailError, loginPasswordError, setLoginPasswordError } = props;
+  const { handleHomeToggle, handleSignUp, loggedInUser, setLoggedInUser, loginEmailError, setLoginEmailError, loginPasswordError, setLoginPasswordError, setCookie } = props;
 
 
   const handleSubmit = async (event) => {
@@ -53,6 +53,7 @@ const Signin = (props) => {
         id: response.data['users'][0]['id'],
         email: response.data['users'][0]['email']
       };
+      setCookie('user_id', response.data['users'][0]['id']);
       setLoggedInUser(userLoggedIn);
       console.log(userLoggedIn);
       handleHomeToggle();      

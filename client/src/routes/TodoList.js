@@ -20,7 +20,8 @@ const TodoList = (props) => {
         title: inputTitle,
         description: inputDescription,
         status: 'pending',
-      };
+        user_id: cookies.user_id
+      };      
       const response = await axios.post('/tasks', newTask);
       // update the state with the new task
       setTodos([...todos, response.data['tasks'][0]])
