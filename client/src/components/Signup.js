@@ -19,7 +19,7 @@ import axios from 'axios';
 
 const Signup = (props) => {
 
-  const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser} = props;
+  const { handleHomeToggle, handleSignIn, loggedInUser, setLoggedInUser, signUpFirstNameError, setSignUpFirstNameError, signUpLastNameError, setSignUpLastNameError, signUpEmailError, setSignUpEmailError, signUpPasswordError, setSignUpPasswordError } = props;
 
   const customTheme = createTheme({
     palette: {
@@ -32,22 +32,47 @@ const Signup = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\.[a-z]{1,}$/i;
+    if (data.get('firstName').trim() === '') {
+      setSignUpFirstNameError(true);
+      return;
+    } else {
+      setSignUpFirstNameError(false);
+    }
+    if (data.get('lastName').trim() === '') {
+      setSignUpLastNameError(true);
+      return;
+    } else {
+      setSignUpLastNameError(false);
+    }
+    if (!emailRegex.test(data.get('email').trim())) {
+      setSignUpEmailError(true);
+      return;
+    } else {
+      setSignUpEmailError(false);
+    }
+    if (data.get('password').trim() === '' || data.get('password').length < 8) {
+      setSignUpPasswordError(true);
+      return;
+    } else {
+      setSignUpPasswordError(false);
+    }
     console.log({
-      first_name: data.get('firstName'), 
-      last_name: data.get('lastName'), 
-      email: data.get('email'), 
+      first_name: data.get('firstName'),
+      last_name: data.get('lastName'),
+      email: data.get('email'),
       password: data.get('password')
     });
     const newUser = {
-      first_name: data.get('firstName'), 
-      last_name: data.get('lastName'), 
-      email: data.get('email'), 
+      first_name: data.get('firstName'),
+      last_name: data.get('lastName'),
+      email: data.get('email'),
       password: data.get('password')
     };
     const response = await axios.post('/users/register', newUser);
-    if(response.data['users'].length > 0){
+    if (response.data['users'].length > 0) {
       const userLoggedIn = {
-        id: response.data['users'][0]['id'], 
+        id: response.data['users'][0]['id'],
         email: response.data['users'][0]['email']
       };
       setLoggedInUser(userLoggedIn);
@@ -85,6 +110,8 @@ const Signup = (props) => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={signUpFirstNameError}
+                  helperText={signUpFirstNameError ? 'First name can not be empty' : ''}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -95,6 +122,8 @@ const Signup = (props) => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  error={signUpLastNameError}
+                  helperText={signUpLastNameError ? 'Last name can not be empty' : ''}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -105,6 +134,8 @@ const Signup = (props) => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={signUpEmailError}
+                  helperText={signUpEmailError ? 'Email address has to be valid' : ''}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -116,6 +147,8 @@ const Signup = (props) => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={signUpPasswordError}
+                  helperText={signUpPasswordError ? 'Password has to be at least 8 characters' : ''}
                 />
               </Grid>
             </Grid>
@@ -129,7 +162,7 @@ const Signup = (props) => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link onClick={handleSignIn} style={{cursor: 'pointer'}} variant="body2">
+                <Link onClick={handleSignIn} style={{ cursor: 'pointer' }} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

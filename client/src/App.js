@@ -47,6 +47,16 @@ function App() {
   const [error, setError] = useState(false);
   const [open, setOpen] = useState({}); // state to keep track of which todo is expanded
 
+  // Login State
+  const [loginEmailError, setLoginEmailError] = useState(false);
+  const [loginPasswordError, setLoginPasswordError] = useState(false);
+
+  // Sign Up State
+  const [signUpFirstNameError, setSignUpFirstNameError] = useState(false);
+  const [signUpLastNameError, setSignUpLastNameError] = useState(false);
+  const [signUpEmailError, setSignUpEmailError] = useState(false);
+  const [signUpPasswordError, setSignUpPasswordError] = useState(false);
+
   const handleAudioClick = (link) => {
     setAudioUrl(link)
   }
@@ -153,8 +163,9 @@ function App() {
 
         {showAmbient && <Ambient audio={audio} handleAudioClick={handleAudioClick} />}
 
-        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
-        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
+        {showLogin && <Login open={showLogin} handleHomeToggle={handleHomeToggle} handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginEmailError={loginEmailError} setLoginEmailError={setLoginEmailError} loginPasswordError={loginPasswordError} setLoginPasswordError={setLoginPasswordError}/>}
+
+        {showSignup && <SignUp open={showSignup} handleHomeToggle={handleHomeToggle} handleSignUp={handleSignUp} handleSignIn={handleSignIn} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} signUpFirstNameError={signUpFirstNameError} setSignUpFirstNameError={setSignUpFirstNameError} signUpLastNameError={signUpLastNameError} setSignUpLastNameError={setSignUpLastNameError} signUpEmailError={signUpEmailError} setSignUpEmailError={setSignUpEmailError} signUpPasswordError={signUpPasswordError} setSignUpPasswordError={setSignUpPasswordError} />}
 
         <Dashboard />
         <Footer />
