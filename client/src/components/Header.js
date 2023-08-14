@@ -25,6 +25,7 @@ const Header = (props) => {
             </Button>
           </div>}
           {Object.keys(loggedInUser).length > 0 && <div className="auth-links">
+            <Typography variant='subtitle1'>Welcome back: {loggedInUser['first_name']}</Typography>
             <Typography variant='subtitle1'>Logged In As: {loggedInUser['email']}</Typography>
             <Button onClick={async () => {await handleSignOut();}} color="inherit" href="" className="auth-button">
               <Typography variant="h6">Logout</Typography>

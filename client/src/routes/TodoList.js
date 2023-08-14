@@ -172,7 +172,7 @@ const TodoList = (props) => {
                     />
                   </div>
                   <div className='todo-buttons'>
-                    {todo.status == 'pending' && <Button
+                    {todo.status === 'pending' && <Button
                       variant='outlined'
                       color='secondary'
                       onClick={() => handleStartTodo(todo.id)}
