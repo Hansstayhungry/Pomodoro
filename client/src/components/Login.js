@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
 import '../styles/Login.scss'
 
 
@@ -21,7 +20,7 @@ import '../styles/Login.scss'
 
 const Signin = (props) => {
 
-  const { handleHomeToggle, handleSignUp, loggedInUser, setLoggedInUser } = props;
+  const { handleHomeToggle, handleSignUp, loggedInUser, setLoggedInUser, loginEmailError, setLoginEmailError, loginPasswordError, setLoginPasswordError } = props;
 
   const customTheme = createTheme({
     palette: {
@@ -34,23 +33,36 @@ const Signin = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\.[a-z]{1,}$/i;
+    if (data.get('email').trim() === '' || !emailRegex.test(data.get('email').trim())) {
+      setLoginEmailError(true);
+      return;
+    } else {
+      setLoginEmailError(false);
+    }
+    if (data.get('password').trim() === '' || data.get('password').length < 8) {
+      setLoginPasswordError(true);
+      return;
+    } else {
+      setLoginPasswordError(false);
+    }
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
     const loginUser = {
-      email: data.get('email'), 
+      email: data.get('email'),
       password: data.get('password')
     };
     const response = await axios.post('/users/login', loginUser);
-    if(response.data['users'].length > 0){
+    if (response.data['users'].length > 0) {
       const userLoggedIn = {
-        id: response.data['users'][0]['id'], 
+        id: response.data['users'][0]['id'],
         email: response.data['users'][0]['email']
       };
       setLoggedInUser(userLoggedIn);
       console.log(userLoggedIn);
-      handleHomeToggle();
+      handleHomeToggle();      
     }
   };
 
@@ -83,6 +95,8 @@ const Signin = (props) => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                error={loginEmailError}
+                helperText={loginEmailError ? 'Email address has to be valid' : ''}
               />
               <TextField
                 margin="normal"
@@ -93,10 +107,8 @@ const Signin = (props) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                error={loginPasswordError}
+                helperText={loginPasswordError ? 'Password has to be at least 8 characters' : ''}
               />
               <Button
                 type="submit"
@@ -106,14 +118,9 @@ const Signin = (props) => {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
+              <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link onClick ={handleSignUp} style={{cursor: 'pointer'}} variant="body2">
+                  <Link onClick={handleSignUp} style={{ cursor: 'pointer' }} variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
