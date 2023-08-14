@@ -117,7 +117,8 @@ function App() {
         console.log(response.data);
         const userLoggedIn = {
           id: response.data['users'][0]['id'], 
-          email: response.data['users'][0]['email']
+          email: response.data['users'][0]['email'],
+          first_name: response.data['users'][0]['first_name']
         };
         setLoggedInUser(userLoggedIn);
       }      
