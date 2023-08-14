@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from 'axios';
 
 import endOfBreakAudio from '../assets/end-of-break.wav';
 import endOfFocusAudio from '../assets/end-of-focus.wav';
@@ -8,7 +9,7 @@ import Box from '@mui/material/Box';
 import "../styles/Timer.scss"
 
 const Timer = (props) => {
-  const {workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats,timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat, endOfBreakAudioRef, endOfFocusAudioRef} = props;
+  const { workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats, timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat, endOfBreakAudioRef, endOfFocusAudioRef, pomodoros, setPomodoros, hasStarted, setHasStarted } = props;
 
   // set timer
   const minutes = Math.floor(timeLeft / 60);
@@ -22,7 +23,7 @@ const Timer = (props) => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
 
-    // clear interval when time is up
+      // clear interval when time is up
     } else if (timeLeft === 0) {
       clearInterval(interval);
 
@@ -53,12 +54,26 @@ const Timer = (props) => {
     setIsActive(!isActive);
   };
 
-  const handleEnd = () => {
+  const handleEnd = async () => {
     setIsActive(false);
     setCurrentRepeat(1);
     setTimeLeft(workTime);
     setIsBreakTime(false);
     setHasStarted(false);
+    if (Object.keys(pomodoros).length > 0) {
+      let currentDate = new Date();
+      let currentTime = currentDate.getTime();
+      let startDate = new Date(currentTime);
+
+      // create new date objects with startDate and endDate
+      let startTime = new Date(startDate);
+
+      // convert date objects to ISO strings
+      let startTimeString = startTime.toISOString();
+      const response = await axios.post(`/pomodoros/${pomodoros['id']}/edit`, { end_time: startTimeString });
+      setPomodoros({...pomodoros, complete: true});
+      console.log(response.data);
+    }
   };
 
   const handleWorkTimeChange = (event) => {
@@ -78,8 +93,6 @@ const Timer = (props) => {
   const handleRepeatChange = (event) => {
     setRepeats(event.target.value);
   };
-
-  const [hasStarted, setHasStarted] = useState(false); // Track whether the user has clicked "Start"
 
   return (
     <div className="timer">

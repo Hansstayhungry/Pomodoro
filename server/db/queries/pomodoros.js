@@ -37,8 +37,8 @@ const addPomodoro = (focus_time, break_time, repeat, start_time, estimated_end_t
 	})
 }
 
-const editPomodoro = (id, focus_time, break_time, repeat, start_time, estimated_end_time, end_time) => {
-	return db.query("UPDATE pomodoros SET focus_time = $1, break_time = $2, repeat = $3, start_time = $4, estimated_end_time = $5, end_time = $6 WHERE id = $7 RETURNING *", [focus_time, break_time, repeat, start_time, estimated_end_time, end_time, id]).then(data => {
+const editPomodoro = (id, end_time) => {
+	return db.query("UPDATE pomodoros SET end_time = $1 WHERE id = $2 RETURNING *", [end_time, id]).then(data => {
 		return data.rows;
 	})
 }
