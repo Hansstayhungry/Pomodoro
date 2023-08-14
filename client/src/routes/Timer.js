@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import "../styles/Timer.scss"
 
 const Timer = (props) => {
-  const { workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats, timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat, endOfBreakAudioRef, endOfFocusAudioRef, pomodoros, setPomodoros, hasStarted, setHasStarted } = props;
+  const { workTime, setWorkTime, breakTime, setBreakTime, repeats, setRepeats, timeLeft, setTimeLeft, isActive, setIsActive, isBreakTime, setIsBreakTime, currentRepeat, setCurrentRepeat, endOfBreakAudioRef, endOfFocusAudioRef, pomodoros, setPomodoros, hasStarted, setHasStarted, cookies } = props;
 
   // set timer
   const minutes = Math.floor(timeLeft / 60);
@@ -48,10 +48,51 @@ const Timer = (props) => {
   }, [isActive, timeLeft, workTime, breakTime, isBreakTime, currentRepeat, repeats]);
 
   const handleToggle = () => {
-    if (!hasStarted) {
-      setHasStarted(true);
+    try {
+      const pomodoro = {
+        user_id: cookies.user_id,
+        task_id: null
+      };
+      async function createNewPomodoro() {
+        let currentDate = new Date();
+        let currentTime = currentDate.getTime();
+        let workTimeMs = parseInt(workTime) * 1000;
+        let breakTimeMs = parseInt(breakTime) * 1000;
+        let totalTimeMs = (workTimeMs + breakTimeMs) * repeats;
+        let endTimeMs = currentTime + totalTimeMs;
+        let startDate = new Date(currentTime);
+        let endDate = new Date(endTimeMs);
+
+        // create new date objects with startDate and endDate
+        let startTime = new Date(startDate);
+        let endTime = new Date(endDate);
+
+        // convert date objects to ISO strings
+        let startTimeString = startTime.toISOString();
+        let endTimeString = endTime.toISOString();
+
+        const newPomodoro = {
+          focus_time: `${workTime / 60} minutes`,
+          break_time: `${breakTime / 60} minutes`,
+          repeat: repeats,
+          start_time: startTimeString,
+          estimated_end_time: endTimeString,
+          task_id: pomodoro['task_id'],
+          user_id: parseInt(pomodoro['user_id'], 10)
+        };
+        console.log(newPomodoro);
+        const response = await axios.post('/pomodoros', newPomodoro);
+        setPomodoros({id: response.data['pomodoros'][0]['id'], user_id: newPomodoro.user_id, task_id: newPomodoro.task_id, complete: false});
+        console.log({id: response.data['pomodoros'][0]['id']});
+        if (!hasStarted) {
+          setHasStarted(true);
+        }
+        setIsActive(!isActive);
+      }
+      createNewPomodoro();
+    } catch (error) {
+      console.error(error);
     }
-    setIsActive(!isActive);
   };
 
   const handleEnd = async () => {

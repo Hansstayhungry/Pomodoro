@@ -96,6 +96,7 @@ function App() {
       console.log('logging out 1');
       const response = await axios.post('/users/logout');
       console.log(response);
+      setCookie('user_id', null);
 
       setLoggedInUser({});
       setShowLogin(true);
@@ -151,7 +152,7 @@ function App() {
 
   useEffect(() => {
     async function completeTasks() {
-      if(Object.keys(pomodoros).length > 0 && pomodoros['complete']){
+      if(Object.keys(pomodoros).length > 0 && pomodoros['complete'] && pomodoros['task_id'] && pomodoros['task_id'] > 0){
         try {
           // find the task by id in the state
           const task = todos.find(todo => todo.id === pomodoros['task_id']);
@@ -167,7 +168,9 @@ function App() {
           console.error(error);
         }
         setPomodoros({});
-      }      
+      } else if(Object.keys(pomodoros).length > 0 && pomodoros['complete'] && !pomodoros['task_id']) {
+        setPomodoros({});
+      }     
     }
     completeTasks(); 
   }, [pomodoros]);
@@ -179,7 +182,7 @@ function App() {
       <div className='main-container'>
         {showHome && (
           <>
-            <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} endOfBreakAudioRef={endOfBreakAudioRef} endOfFocusAudioRef={endOfFocusAudioRef} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} pomodoros={pomodoros} setPomodoros={setPomodoros} hasStarted={hasStarted} setHasStarted={setHasStarted}/>
+            <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} endOfBreakAudioRef={endOfBreakAudioRef} endOfFocusAudioRef={endOfFocusAudioRef} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} pomodoros={pomodoros} setPomodoros={setPomodoros} hasStarted={hasStarted} setHasStarted={setHasStarted} cookies={cookies} />
 
             <TodoList todos={todos} setTodos={setTodos} pomodoros={pomodoros} setPomodoros={setPomodoros} inputTitle={inputTitle} setInputTitle={setInputTitle} inputDescription={inputDescription} setInputDescription={setInputDescription} error={error} setError={setError} open={open} setOpen={setOpen} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} cookies={cookies} workTime={workTime} breakTime={breakTime} repeats={repeats} isActive={isActive} setIsActive={setIsActive} hasStarted={hasStarted} setHasStarted={setHasStarted}/>
           </>
