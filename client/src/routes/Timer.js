@@ -163,6 +163,9 @@ const Timer = (props) => {
         {!hasStarted && ( // Show "Start" button if the user has not started the timer
           <Button onClick={handleToggle}>Start</Button>
         )}
+      <div className="status">
+        {hasStarted && (<p> Current set: {Math.round(currentRepeat /2)} / {repeats} </p>)}
+      </div>
       </div>
       {!hasStarted && (<div className="settings">
         <Box
