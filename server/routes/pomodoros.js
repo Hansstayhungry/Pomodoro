@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
   })
 });
 router.post('/:id/edit', (req, res) => {
-  pomodoros.editPomodoro(req.params.id, req.body.focus_time, req.body.break_time, req.body.repeat, req.body.start_time, req.body.estimated_end_time, req.body.end_time).then(data => {
+  pomodoros.editPomodoro(req.params.id, req.body.end_time).then(data => {
     console.log(data);
     res.json({pomodoros: data});
   })
