@@ -8,12 +8,13 @@ import Ambient from './components/Ambient';
 import Login from './components/Login';
 import axios from 'axios';
 import { useCookies } from "react-cookie";
-import './styles/App.scss';
 
 // import { Typography, AppBar, Card, CardActions, CardContent, 
 //   CardMedia, CssBaseline, Grid, Toolbar, Container } from '@mui/material';
 import Dashboard from './components/Dashboard';
 import SignUp from './components/Signup';
+
+import './styles/App.scss';
 
 function App() {
 
@@ -160,7 +161,6 @@ function App() {
 
   return (
     <div className='app'>
-
       <Header className='header' audioUrl={audioUrl} handleAmbientToggle={handleAmbientToggle} handleHomeToggle={handleHomeToggle}
         handleSignIn={handleSignIn} handleSignUp={handleSignUp} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} handleSignOut={handleSignOut} />
       <div className='main-container'>

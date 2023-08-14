@@ -1,6 +1,6 @@
 // TodoList.js
 import React, { useState } from 'react';
-import { Button, TextField, List, ListItem, ListItemText, Checkbox, Collapse } from '@mui/material';
+import { Button, TextField, List, ListItem, ListItemText, Checkbox, Collapse, Typography } from '@mui/material';
 import axios from 'axios';
 import '../styles/TodoList.scss';
 
@@ -84,7 +84,7 @@ const TodoList = (props) => {
 
   return (
     <div className='pomodoro-todo-list'>
-      <h2>Todo List</h2>
+      <Typography variant="h5">Todo List</Typography>
       <div className='add-todo'>
         <TextField style={{width: '40vw'}}
           label='Add a new task title'

@@ -4,6 +4,7 @@ import endOfBreakAudio from '../assets/end-of-break.wav';
 import endOfFocusAudio from '../assets/end-of-focus.wav';
 
 import { Button, TextField, Typography } from "@mui/material"
+import Box from '@mui/material/Box';
 import "../styles/Timer.scss"
 
 const Timer = (props) => {
@@ -106,33 +107,57 @@ const Timer = (props) => {
         )}
       </div>
       {!hasStarted && (<div className="settings">
-        <label>
-          Work Time (minutes):
-          <input
-            type="number"
-            value={workTime / 60}
-            onChange={handleWorkTimeChange}
-            min="1"
-          />
-        </label>
-        <label>
-          Break Time (minutes):
-          <input
-            type="number"
-            value={breakTime / 60}
-            onChange={handleBreakTimeChange}
-            min="1"
-          />
-        </label>
-        <label>
-          Number of Repeats:
-          <input
-            type="number"
-            value={repeats}
-            onChange={handleRepeatChange}
-            min="1"
-          />
-        </label>
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '20ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+              id="outlined-number"
+              label=
+                "Focus Time (minutes):"
+
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              value={workTime / 60}
+              onChange={handleWorkTimeChange}
+              min="1"
+            />
+          <TextField
+              id="outlined-number"
+              label=
+                "Break Time (minutes):"
+
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              value={breakTime / 60}
+              onChange={handleBreakTimeChange}
+              min="1"
+            />
+          <TextField
+              id="outlined-number"
+              label=
+                "Number of Repeats"
+
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              value={repeats}
+              onChange={handleRepeatChange}
+              min="1"
+            />                          
+        </Box>
       </div>)}
     </div>
   );
