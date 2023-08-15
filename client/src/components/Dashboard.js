@@ -5,7 +5,6 @@ function Dashboard() {
   // Implement user-specific features and content here
   return (
     <div>
-      Dashboard
     </div>
   );
 }

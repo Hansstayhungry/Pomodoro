@@ -51,7 +51,8 @@ const Signin = (props) => {
     if (response.data['users'].length > 0) {
       const userLoggedIn = {
         id: response.data['users'][0]['id'],
-        email: response.data['users'][0]['email']
+        email: response.data['users'][0]['email'],
+        first_name: response.data['users'][0]['first_name']
       };
       setCookie('user_id', response.data['users'][0]['id']);
       setLoggedInUser(userLoggedIn);
