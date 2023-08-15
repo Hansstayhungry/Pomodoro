@@ -12,19 +12,19 @@ Doro - Your personal productivity booster, wrapped beautifully with Material UI,
 ## Screenshots
 
 ### Main page
-
+![mainPage](https://github.com/Hansstayhungry/Pomodoro/blob/main/src/screenshots/main-page.png)
 
 ### Pomodoro set start
-
+![pomodoro](https://github.com/Hansstayhungry/Pomodoro/blob/main/src/screenshots/pomodoro.png)
 
 ### Ambient sound
-
+![ambientSound](https://github.com/Hansstayhungry/Pomodoro/blob/main/src/screenshots/ambient-sound.png)
 
 ### Todo list
-
+![todoList](https://github.com/Hansstayhungry/Pomodoro/blob/main/src/screenshots/todo-list.png)
 
 ### LogIn page
-
+![loginPage](https://github.com/Hansstayhungry/Pomodoro/blob/main/src/screenshots/login.png)
 
 ## Getting Started
   two folders: client, and server
