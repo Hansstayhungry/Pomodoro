@@ -16,11 +16,15 @@ const TodoList = (props) => {
     }
     try {
       // create a new task in the database with the input title and description and default values
+      let user_id = null;
+      if(cookies.user_id && cookies.user_id > 0){
+        user_id = cookies.user_id;
+      }
       const newTask = {
         title: inputTitle,
         description: inputDescription,
         status: 'pending',
-        user_id: cookies.user_id
+        user_id: user_id
       };      
       const response = await axios.post('/tasks', newTask);
       // update the state with the new task

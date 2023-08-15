@@ -18,7 +18,7 @@ const Header = (props) => {
           </Typography>
           {Object.keys(loggedInUser).length == 0 && <div className="auth-links">
             <Button onClick={handleSignIn} color="inherit" href="" className="auth-button">
-              <Typography variant="h6">Log in</Typography>
+              <Typography variant="h6">Sign in</Typography>
             </Button>
             <Button onClick={handleSignUp} color="inherit" href="" className="auth-button">
               <Typography variant="h6">Sign up</Typography>
