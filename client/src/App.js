@@ -19,7 +19,7 @@ import './styles/App.scss';
 function App() {
 
   const GET_AUDIO = '/audio/api/'
-  const [cookies, setCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [loggedInUser, setLoggedInUser] = useState({});
 
   const [audio, setAudio] = useState([]);
@@ -94,9 +94,12 @@ function App() {
   const handleSignOut = async () => {
     try {
       console.log('logging out 1');
+      // setCookie('user_id', null);
       const response = await axios.post('/users/logout');
       console.log(response);
-      setCookie('user_id', null);
+      removeCookie('user_id');
+      //setCookie('user_id', null);
+      console.log(cookies.user_id);
 
       setLoggedInUser({});
       setShowLogin(true);
