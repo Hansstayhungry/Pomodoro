@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Ambient from './components/Ambient';
 import Login from './components/Login';
+import Greeting from './components/Greeting';
 import axios from 'axios';
 import { useCookies } from "react-cookie";
 
@@ -186,6 +187,7 @@ function App() {
       <div className='main-container'>
         {showHome && (
           <>
+            <Greeting loggedInUser={loggedInUser}/>
             <Timer workTime={workTime} setWorkTime={setWorkTime} breakTime={breakTime} setBreakTime={setBreakTime} repeats={repeats} setRepeats={setRepeats} timeLeft={timeLeft} setTimeLeft={setTimeLeft} isActive={isActive} setIsActive={setIsActive} isBreakTime={isBreakTime} setIsBreakTime={setIsBreakTime} currentRepeat={currentRepeat} setCurrentRepeat={setCurrentRepeat} endOfBreakAudioRef={endOfBreakAudioRef} endOfFocusAudioRef={endOfFocusAudioRef} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} pomodoros={pomodoros} setPomodoros={setPomodoros} hasStarted={hasStarted} setHasStarted={setHasStarted} cookies={cookies} />
 
             <TodoList todos={todos} setTodos={setTodos} pomodoros={pomodoros} setPomodoros={setPomodoros} inputTitle={inputTitle} setInputTitle={setInputTitle} inputDescription={inputDescription} setInputDescription={setInputDescription} error={error} setError={setError} open={open} setOpen={setOpen} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} cookies={cookies} workTime={workTime} breakTime={breakTime} repeats={repeats} isActive={isActive} setIsActive={setIsActive} hasStarted={hasStarted} setHasStarted={setHasStarted}/>
